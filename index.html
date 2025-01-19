@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Facade</title>
+
+    <link rel="stylesheet" href="./dist/scss/style.css">
+
+</head>
+<body>
+
+    <a role="button"
+    class="youtube-container"
+    data-youtube-id="EngW7tLk6R8&t" href="#">
+    <div class="embed-responsive embed-responsive-16by9">
+      <img class="embed-responsive-item"
+        id="youtube-EngW7tLk6R8&t"
+        alt="Click to play embedded youtube video"
+        src="//i.ytimg.com/vi/EngW7tLk6R8&t/maxresdefault.jpg">
+    </div>
+  
+    <div class="youtube-caption--wrapper">
+      <div class="youtube-caption btn btn-warning rounded-pill">
+        <span><i class="icon icon-play" aria-hidden="true"></i></span>
+        Play Video
+      </div>
+    </div>
+  </a>
+
+    <script>
+
+        const youtubeSelector = '[data-youtube-id]';
+        const youtubeElements = document.querySelectorAll(youtubeSelector);
+        if (youtubeElements.length > 0) {
+            import(/* webpackChunkName: "youtube-facade2" */ './youtubeFacade')
+                .then(({default: setup}) => {
+                setup(youtubeSelector);
+                });
+
+            addModalTriggers(youtubeElements);
+            addModal('yf-modal', 'yf-modal-placeholder');
+        };
+
+    </script>
+</body>
+</html>
