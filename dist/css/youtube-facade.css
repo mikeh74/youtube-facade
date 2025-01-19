@@ -1,0 +1,135 @@
+/* .youtube-facade-container {
+  display: block;
+  width: 100%;
+  position: relative;
+  aspect-ratio: 16/9;
+  object-fit: contain;
+} */
+
+.youtube-facade,
+.youtube-facade-iframe,
+.youtube-facade-img {
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: auto;
+}
+
+.youtube-facade {
+  background-color: #000;
+  position: relative;
+  display: flex;
+  /* contain: content; */
+  /* background-position: center center;
+  background-size: cover; */
+  cursor: pointer;
+  /* max-width: 720px; */
+  /* aspect-ratio: 16/9; */
+  overflow: hidden;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.youtube-facade::before {
+  content: attr(data-title);
+  display: block;
+  position: absolute;
+  top: 0;
+  /* Pixel-perfect port of YT's gradient PNG, using https://github.com/bluesmoon/pngtocss plus optimizations */
+  background-image: linear-gradient(180deg, rgb(0 0 0 / 67%) 0%, rgb(0 0 0 / 54%) 14%, rgb(0 0 0 / 15%) 54%, rgb(0 0 0 / 5%) 72%, rgb(0 0 0 / 0%) 94%);
+  height: 99px;
+  width: 100%;
+  font-family: "YouTube Noto", Roboto, Arial, Helvetica, sans-serif;
+  color: hsl(0deg 0% 93.33%);
+  text-shadow: 0 0 2px rgba(0, 0, 0, .5);
+  font-size: clamp(1rem, 6vw, 1.6rem);
+  padding: 25px 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.youtube-facade:hover::before {
+  color: white;
+}
+
+/* .youtube-facade::after {
+  content: "";
+  display: block;
+  padding-bottom: calc(100% / (16 / 9));
+} */
+
+/* .youtube-facade > iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+} */
+
+/* .youtube-facade-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+} */
+
+/* play button */
+/* .youtube-facade::after, */
+.youtube-facade-playbtn {
+  display: block;
+  width: 45px;
+  height: 32px;
+  background: no-repeat center/45px 32px;
+  /* YT's actual play button svg */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24 27 14v20" fill="white"/></svg>');
+  position: absolute;
+  /* cursor: pointer; */
+  z-index: 1;
+  filter: grayscale(100%);
+  transition: filter .1s cubic-bezier(0, 0, 0.2, 1);
+  border: 0;
+  pointer-events: none;
+}
+
+@media screen and (min-width: 576px) {
+  .youtube-facade-playbtn {
+    width: 68px;
+    height: 48px;
+    background-size: 68px 48px;
+  }
+}
+
+.youtube-facade:hover .youtube-facade-playbtn,
+.youtube-facade-playbtn:focus,
+.youtube-facade:focus .youtube-facade-playbtn {
+  filter: none;
+}
+
+/* Post-click styles */
+.youtube-facade-active {
+  cursor: unset;
+}
+
+.youtube-facade-active::before,
+.youtube-facade-active>.youtube-facade-playbtn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.youtube-facade-visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
