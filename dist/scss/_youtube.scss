@@ -1,0 +1,103 @@
+.youtube-container {
+  display: block;
+  width: 100%;
+  position: relative;
+
+  figure {
+    margin: 0;
+  }
+}
+
+.youtube-caption--wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.youtube-caption--wrapper-fade {
+  opacity: 0;
+}
+
+.youtube-bg-image {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.modal-youtube {
+  background-color: rgba($dark, 0.9);
+
+  .modal-youtube-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100vw;
+  }
+
+  .modal.fade .modal-dialog {
+    transform: none;
+  }
+
+  .modal-dialog {
+    z-index: 10;
+    margin: 0;
+    color: $primary;
+    background-color: transparent;
+    transform: none;
+    max-width: 80%;
+    width: 300px;
+  }
+
+  .modal-body-youtube {
+    margin: 0;
+    padding: 0;
+  }
+
+  .modal-content {
+    box-shadow: 0 0 53px 22px rgba($black, 0.31);
+  }
+
+  .close {
+    position: absolute;
+    top: -2rem;
+    right: 0;
+    opacity: 1;
+    font-family: $font-family-heading-sans-serif;
+    filter: alpha(opacity=100);
+    margin-top: 0;
+    padding: 6px 18px;
+    background-color: $primary;
+    border-radius: 1rem;
+    color: $white;
+    font-size: 15px;
+    font-size: 0.7375rem;
+    line-height: 16px;
+    line-height: 1rem;
+    font-weight: bold;
+    text-shadow: none;
+  }
+}
+
+$modal-youtube-vars: (sm: 460px, md: 615px, lg: 800px, xl: 1200px);
+
+@each $breakpoint,
+  $size in $modal-youtube-vars {
+  @include media-breakpoint-up(#{$breakpoint}) {
+    .modal-youtube {
+      .modal-dialog {
+        width: $size;
+      }
+    }
+  }
+}
