@@ -2,11 +2,51 @@
 // const modalContent = documment.getElementById('yf-modal-placeholder');
 // console.log(modalContent);
 
+/**
+ * 
+ * @param {string} url 
+ */
+const addPreconnect = (url) => {
+  const link = document.createElement('link');
+  link.rel = 'preconnect';
+  link.href = url;
+  document.head.appendChild(link);
+}
+
+const warmConnections = (function() {
+
+  let preconnnectsAdded = false;
+
+  let preconnectUrls = [
+    'https://www.youtube-nocookie.com',
+    'https://www.google.com'
+  ];
+
+  return function() {
+    if (preconnnectsAdded) {
+      console.log('preconnects already added');
+      return;
+    }
+
+    preconnectUrls.forEach(url => {
+      addPreconnect(url);
+    });
+
+    console.log('preconnects added');
+
+    preconnnectsAdded = true;
+  }
+})();
+
 const els = document.querySelectorAll('.youtube-facade');
 
 console.log(els);
 
 els.forEach(el => {
+
+  el.addEventListener('pointerover', warmConnections, {once: true});
+  el.addEventListener('focusin', warmConnections, {once: true});
+
   el.addEventListener('click', (e) => {
     console.log('clicked');
     e.preventDefault();
@@ -33,7 +73,6 @@ els.forEach(el => {
   });
 });
 
-
 const toggleModal = () => {
   const modal = document.querySelector('.youtube-facade-modal');
   modal.classList.toggle('youtube-facade-modal-active');
@@ -41,7 +80,7 @@ const toggleModal = () => {
 
 function createYouTubeIframe(videoId) {
   const iframe = document.createElement('iframe');
-  iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1`);
+  iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`);
   iframe.setAttribute('width', '560');
   iframe.setAttribute('height', '315');
   iframe.setAttribute('class', 'youtube-facade-iframe');
@@ -87,3 +126,63 @@ closeButtons.forEach(button => {
     modalContent.innerHTML = '';
   });
 });
+
+// ------ YouTube Iframe API ------
+
+// The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+  event.target.playVideo();
+}
+
+let isYouTubeIframeAPILoaded = false;
+let youTubeIframeAPIPromise = null;
+
+async function loadYouTubeIframeAPI() {
+
+  if (isYouTubeIframeAPILoaded) {
+    return Promise.resolve(YT);
+  }
+
+  if (youTubeIframeAPIPromise) {
+    return youTubeIframeAPIPromise;
+  }
+
+  youTubeIframeAPIPromise = new Promise((resolve) => {
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubeIframeAPIReady = () => {
+      isYouTubeIframeAPILoaded = true;
+      resolve(YT);
+    };
+  });
+
+  return youTubeIframeAPIPromise;
+}
+
+async function createYouTubePlayer(elementId, videoId) {
+  const YT = await loadYouTubeIframeAPI();
+  return new YT.Player(elementId, {
+    height: '390',
+    width: '640',
+    videoId: videoId,
+    playerVars: {
+      'playsinline': 1
+    },
+    events: {
+      'onReady': onPlayerReady
+    }
+  });
+}
+
+// Usage example:
+// let youtubeEl = document.getElementById('player');
+//
+// createYouTubePlayer(youtubeEl, 'uIlwoXYcods').then(player => {
+//   console.log(player);
+// });
+
+// make player available to the global scope
+window.onPlayerReady = onPlayerReady;
