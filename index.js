@@ -92,6 +92,48 @@ function renderYouTubeIframe(el, videoId) {
   }
 }
 
+function renderYoutubePlayer(el, videoId) {
+
+  // check if the element has the data-youtube-modal attribute
+  const modal = el.getAttribute('data-youtube-modal');
+
+  let target = el;
+
+  if (modal) {
+    const modalPlaceholder = document.getElementById('youtube-facade-modal-placeholder');
+
+    // create a new iframe element to insert into the modal placeholder element
+    const newDiv = document.createElement('div');
+    newDiv.classList.add('youtube-facade-iframe');
+    modalPlaceholder.appendChild(newDiv);
+    console.log(newDiv);
+    target = newDiv;
+    toggleModal();
+  }
+
+  createYouTubePlayer(target, videoId).then(player => {
+    console.log(player);
+    window.myplayer = player;
+  });
+}
+
+function renderYouTubeIframe(el, videoId) {
+  const iframe = createYouTubeIframe(videoId);
+
+  // check if the element has the data-youtube-modal attribute
+  const modal = el.getAttribute('data-youtube-modal');
+
+  if (modal) {
+    // toggle the modal
+    toggleModal();
+    const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
+    modalContent.appendChild(iframe);
+  } else {
+    // replace the element with the iframe
+    el.replaceWith(iframe);
+  }
+}
+
 function createYouTubeIframe(videoId) {
   const iframe = document.createElement('iframe');
   iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`);
