@@ -168,11 +168,9 @@
 .youtube-facade-modal-content {
   position: relative;
   width: 90vw;
-  /* max-width: 1280px; */
   max-width: 900px;
-  /* max-height: 720px; */
-  /* overflow: hidden; */
   height: auto;
+  max-height: 90vh;
   border: 0;
   margin: 0;
   padding: 0;
