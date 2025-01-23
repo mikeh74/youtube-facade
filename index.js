@@ -54,21 +54,22 @@ els.forEach(el => {
     // try to get the video id from the data-youtube-id attribute first
     const videoId = getYoutubeVideoId(el);
 
-    // create an iframe element and replace the current element with it
-    const iframe = createYouTubeIframe(videoId);
-    console.log(iframe);
+    // at this point decide whether to create an iframe element or to use
+    // the youtube iframe api to create a player 
 
-    // check if the element has the data-youtube-modal attribute
-    const modal = el.getAttribute('data-youtube-modal');
+    // let needsYTApi = true;
 
-    if (modal) {
-      // toggle the modal
-      toggleModal();
-      const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
-      modalContent.appendChild(iframe);
+    // needsYTApi = this.hasAttribute("js-api") || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
+    const needsYTApi = navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
+
+    if (needsYTApi) {
+      // create a player using the youtube iframe api
+      // createYouTubePlayer(el, videoId);
+      renderYoutubePlayer(el, videoId);
+      return;
     } else {
-      // replace the element with the iframe
-      el.replaceWith(iframe);
+      // create an iframe element and replace the current element with it
+      renderYouTubeIframe(el, videoId);
     }
   });
 });
@@ -76,6 +77,48 @@ els.forEach(el => {
 const toggleModal = () => {
   const modal = document.querySelector('.youtube-facade-modal');
   modal.classList.toggle('youtube-facade-modal-active');
+}
+
+function renderYoutubePlayer(el, videoId) {
+
+  // check if the element has the data-youtube-modal attribute
+  const modal = el.getAttribute('data-youtube-modal');
+
+  let target = el;
+
+  if (modal) {
+    const modalPlaceholder = document.getElementById('youtube-facade-modal-placeholder');
+
+    // create a new iframe element to insert into the modal placeholder element
+    const newDiv = document.createElement('div');
+    newDiv.classList.add('youtube-facade-iframe');
+    modalPlaceholder.appendChild(newDiv);
+    console.log(newDiv);
+    target = newDiv;
+    toggleModal();
+  }
+
+  createYouTubePlayer(target, videoId).then(player => {
+    console.log(player);
+    window.myplayer = player;
+  });
+}
+
+function renderYouTubeIframe(el, videoId) {
+  const iframe = createYouTubeIframe(videoId);
+
+  // check if the element has the data-youtube-modal attribute
+  const modal = el.getAttribute('data-youtube-modal');
+
+  if (modal) {
+    // toggle the modal
+    toggleModal();
+    const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
+    modalContent.appendChild(iframe);
+  } else {
+    // replace the element with the iframe
+    el.replaceWith(iframe);
+  }
 }
 
 function createYouTubeIframe(videoId) {
@@ -98,22 +141,23 @@ function createYouTubeIframe(videoId) {
  * @return {string} videoId
  */
 function getYoutubeVideoId(el) {
-
   let videoId = null;
-
   videoId = el.getAttribute('data-youtube-id');
 
   if (videoId) {
-    console.log(videoId);
     return videoId;
   }
 
   // parse href of the element and get the video id from the v parameter
   const href = el.getAttribute('href');
-  const url = new URL(href);
-  videoId = url.searchParams.get('v');
 
-  console.log(videoId);
+  try {
+    const url = new URL(href);
+    videoId = url.searchParams.get('v');
+  } catch (error) {
+    return null;
+  }
+
   return videoId;
 }
 
@@ -169,7 +213,9 @@ async function createYouTubePlayer(elementId, videoId) {
     width: '640',
     videoId: videoId,
     playerVars: {
-      'playsinline': 1
+      'playsinline': 1,
+      'autoplay': 1,
+      'rel': 0,
     },
     events: {
       'onReady': onPlayerReady
@@ -177,12 +223,15 @@ async function createYouTubePlayer(elementId, videoId) {
   });
 }
 
-// Usage example:
-// let youtubeEl = document.getElementById('player');
-//
-// createYouTubePlayer(youtubeEl, 'uIlwoXYcods').then(player => {
-//   console.log(player);
+
+// Example usage
+// const ytBtn = document.querySelector('.yt-target-btn');
+
+// ytBtn.addEventListener('click', () => {
+//   ytEl = document.querySelector('.yt-target');
+//   createYouTubePlayer(ytEl, 'uIlwoXYcods').then(player => {
+//     window.myplayer = player;
+//   });
 // });
 
-// make player available to the global scope
-window.onPlayerReady = onPlayerReady;
+// ------ YouTube Iframe API ------
