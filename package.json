@@ -4,7 +4,7 @@
   "description": "Youtube facade functionality",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "sass ./src/youtube-facade.scss ./dist/youtube-facade.css"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/mikeh74/youtube-facade/issues"
   },
-  "homepage": "https://github.com/mikeh74/youtube-facade#readme"
+  "homepage": "https://github.com/mikeh74/youtube-facade#readme",
+  "devDependencies": {
+    "sass": "^1.83.4"
+  }
 }

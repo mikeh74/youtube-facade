@@ -122,3 +122,4 @@ web_modules/
 .pnp.*
 
 .vscode/*
+review/
