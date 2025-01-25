@@ -1,10 +1,7 @@
-/* .youtube-facade-container {
-  display: block;
-  width: 100%;
-  position: relative;
-  aspect-ratio: 16/9;
-  object-fit: contain;
-} */
+
+$transition-settings: 0.33s ease-in-out;
+$light: #fff;
+$dark: #292929;
 
 .youtube-facade,
 .youtube-facade-iframe,
@@ -18,12 +15,8 @@
   background-color: #000;
   position: relative;
   display: flex;
-  /* contain: content; */
-  /* background-position: center center;
-  background-size: cover; */
+
   cursor: pointer;
-  /* max-width: 720px; */
-  /* aspect-ratio: 16/9; */
   overflow: hidden;
   border: 0;
   margin: 0;
@@ -54,32 +47,9 @@
 }
 
 .youtube-facade:hover::before {
-  color: white;
+  color: $light;
 }
 
-/* .youtube-facade::after {
-  content: "";
-  display: block;
-  padding-bottom: calc(100% / (16 / 9));
-} */
-
-/* .youtube-facade > iframe {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: 0;
-} */
-
-/* .youtube-facade-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-} */
 
 /* play button */
 /* .youtube-facade::after, */
@@ -94,7 +64,7 @@
   /* cursor: pointer; */
   z-index: 1;
   filter: grayscale(100%);
-  transition: filter .1s cubic-bezier(0, 0, 0.2, 1);
+  transition: filter $transition-settings;
   border: 0;
   pointer-events: none;
 }
@@ -141,11 +111,11 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: #292929;
+  background-color: $dark;
   z-index: 10000;
   overflow-y: hidden;
   opacity: 0;
-  transition: opacity 0.33s ease-in-out;
+  transition: opacity $transition-settings;
 }
 
 .youtube-facade-modal.youtube-facade-modal-active {
@@ -155,14 +125,14 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background-color: #292929;
+	background-color: $dark;
 	z-index: 10000;
 	overflow-y: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	opacity: 1;
-	transition: opacity 0.33s ease-in-out;
+	transition: opacity $transition-settings;
 }
 
 .youtube-facade-modal-content {
@@ -191,11 +161,29 @@
   cursor: pointer;
   border-radius: 0.4rem;
   background: transparent;
-  border: 1px solid #fff;
-  color: #fff;
+  border: 1px solid $light;
+  color: $light;
   font-size: 1rem;
   z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all $transition-settings;
+
+  &:hover, &:focus {
+    background: $light;
+    color: $dark;
+    transition: all $transition-settings;
+  }
+
+  path {
+   fill: $light;
+   transition: all $transition-settings;
+  }
+
+  &:hover path,
+  &:focus path {
+    fill: $dark;
+    transition: all $transition-settings;
+  }
 }

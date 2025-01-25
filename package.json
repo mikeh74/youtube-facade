@@ -4,7 +4,8 @@
   "description": "Youtube facade functionality",
   "main": "index.js",
   "scripts": {
-    "compile": "sass ./src/youtube-facade.scss ./dist/youtube-facade.css"
+    "compile": "sass ./src/youtube-facade.scss ./dist/youtube-facade.css",
+    "watch": "sass -w ./src/youtube-facade.scss ./dist/youtube-facade.css"
   },
   "repository": {
     "type": "git",
