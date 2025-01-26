@@ -1,7 +1,8 @@
-
 $transition-settings: 0.33s ease-in-out;
 $light: #fff;
 $dark: #292929;
+
+
 
 .youtube-facade,
 .youtube-facade-iframe,
@@ -116,23 +117,28 @@ $dark: #292929;
   overflow-y: hidden;
   opacity: 0;
   transition: opacity $transition-settings;
+
+  &-inner {
+    aspect-ratio: 16/9;
+    background-color: #000;
+  }
 }
 
 .youtube-facade-modal.youtube-facade-modal-active {
-	pointer-events: auto;
-	position: fixed;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background-color: $dark;
-	z-index: 10000;
-	overflow-y: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	opacity: 1;
-	transition: opacity $transition-settings;
+  pointer-events: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: $dark;
+  z-index: 10000;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity $transition-settings;
 }
 
 .youtube-facade-modal-content {
@@ -170,15 +176,16 @@ $dark: #292929;
   align-items: center;
   transition: all $transition-settings;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background: $light;
     color: $dark;
     transition: all $transition-settings;
   }
 
   path {
-   fill: $light;
-   transition: all $transition-settings;
+    fill: $light;
+    transition: all $transition-settings;
   }
 
   &:hover path,

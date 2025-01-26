@@ -109,6 +109,10 @@
   opacity: 0;
   transition: opacity 0.33s ease-in-out;
 }
+.youtube-facade-modal-inner {
+  aspect-ratio: 16/9;
+  background-color: #000;
+}
 
 .youtube-facade-modal.youtube-facade-modal-active {
   pointer-events: auto;
