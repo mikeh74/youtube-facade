@@ -161,6 +161,12 @@ async function createYouTubePlayer(elementId, videoId, playerVars) {
   });
 }
 
+// function to check viewport width is less than 400px and the user is on a
+// mobile device, and the user agent includes 'Intel Mac OS X'
+function isMobile() {
+  return window.innerWidth < 600 && navigator.userAgent.includes('Mobi');
+}
+
 // on DomContentLoaded add modal code to the body
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.createElement('div');
@@ -212,9 +218,16 @@ const closeModal = () => {
   modalContent.innerHTML = '';
 }
 
+/**
+ * Initialize the youtube facade
+ *
+ * @param {object} options
+ * @param {string} options.selector
+ * @param {boolean} options.muteForAutoplay
+ */
 const youtubeFacade = ({
   selector = '.youtube-facade',
-  muteForAutoplay = false
+  muteForAutoplay = true
 } = {}) => {
 
     const playerVars = {
@@ -233,15 +246,16 @@ const youtubeFacade = ({
   
     el.addEventListener('pointerover', warmConnections, {once: true});
     el.addEventListener('focusin', warmConnections, {once: true});
-  
+
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const videoId = getYoutubeVideoId(el);
-  
+
       // needsYTApi = this.hasAttribute("js-api") || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
       const needsYTApi = navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
 
-      if (el.hasAttribute("data-mute-for-mobile")) {
+      // check if the element has the data-mute-for-mobile attribute and the user is on an iPhone
+      if (el.hasAttribute("data-mute-for-mobile") && isMobile()) {
         playerVars['mute'] = 1;
       };
 
