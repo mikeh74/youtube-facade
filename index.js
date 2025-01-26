@@ -236,7 +236,7 @@ const youtubeFacade = ({
       'rel': 0,
     };
 
-    if (muteForAutoplay) {
+    if (muteForAutoplay && isMobile()) {
       playerVars['mute'] = 1;
     };
 
