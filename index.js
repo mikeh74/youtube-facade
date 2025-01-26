@@ -27,47 +27,7 @@ const warmConnections = (function() {
   }
 })();
 
-// function renderYoutubePlayer(el, videoId) {
-
-//   // check if the element has the data-youtube-modal attribute
-//   const modal = el.getAttribute('data-youtube-modal');
-//   let target = el;
-
-//   if (modal) {
-//     const modalPlaceholder = document.getElementById('youtube-facade-modal-placeholder');
-
-//     // create a new iframe element to insert into the modal placeholder element
-//     const newDiv = document.createElement('div');
-//     newDiv.classList.add('youtube-facade-iframe');
-//     modalPlaceholder.appendChild(newDiv);
-//     target = newDiv;
-//     toggleModal();
-//   }
-
-//   createYouTubePlayer(target, videoId).then(player => {
-//     console.log(player);
-//     window.myplayer = player;
-//   });
-// }
-
-// function renderYouTubeIframe(el, videoId) {
-//   const iframe = createYouTubeIframe(videoId);
-
-//   // check if the element has the data-youtube-modal attribute
-//   const modal = el.getAttribute('data-youtube-modal');
-
-//   if (modal) {
-//     // toggle the modal
-//     toggleModal();
-//     const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
-//     modalContent.appendChild(iframe);
-//   } else {
-//     // replace the element with the iframe
-//     el.replaceWith(iframe);
-//   }
-// }
-
-function renderYoutubePlayer(el, videoId) {
+function renderYoutubePlayer(el, videoId, playerVars) {
 
   // check if the element has the data-youtube-modal attribute
   const modal = el.getAttribute('data-youtube-modal');
@@ -85,14 +45,14 @@ function renderYoutubePlayer(el, videoId) {
     toggleModal();
   }
 
-  createYouTubePlayer(target, videoId).then(player => {
+  createYouTubePlayer(target, videoId, playerVars).then(player => {
     console.log(player);
     window.myplayer = player;
   });
 }
 
-function renderYouTubeIframe(el, videoId) {
-  const iframe = createYouTubeIframe(videoId);
+function renderYouTubeIframe(el, videoId, playerVars) {
+  const iframe = createYouTubeIframe(videoId, playerVars);
 
   // check if the element has the data-youtube-modal attribute
   const modal = el.getAttribute('data-youtube-modal');
@@ -108,9 +68,13 @@ function renderYouTubeIframe(el, videoId) {
   }
 }
 
-function createYouTubeIframe(videoId) {
+function createYouTubeIframe(videoId, playerVars) {
+
+  // convert playerVars object to query string
+  const playerVarsString = new URLSearchParams(playerVars).toString();
+
   const iframe = document.createElement('iframe');
-  iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`);
+  iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?${playerVarsString}`);
   iframe.setAttribute('width', '720');
   iframe.setAttribute('height', '405');
   iframe.setAttribute('class', 'youtube-facade-iframe');
@@ -183,17 +147,14 @@ async function loadYouTubeIframeAPI() {
   return youTubeIframeAPIPromise;
 }
 
-async function createYouTubePlayer(elementId, videoId) {
+async function createYouTubePlayer(elementId, videoId, playerVars) {
   const YT = await loadYouTubeIframeAPI();
   return new YT.Player(elementId, {
     width: '720',
     height: '405',
     videoId: videoId,
-    playerVars: {
-      'playsinline': 1,
-      'autoplay': 1,
-      'rel': 0,
-    },
+    allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',
+    playerVars: playerVars,
     events: {
       'onReady': onPlayerReady
     }
@@ -252,8 +213,19 @@ const closeModal = () => {
 }
 
 const youtubeFacade = ({
-  selector = '.youtube-facade'
+  selector = '.youtube-facade',
+  muteForAutoplay = false
 } = {}) => {
+
+    const playerVars = {
+      'playsinline': 1,
+      'autoplay': 1,
+      'rel': 0,
+    };
+
+    if (muteForAutoplay) {
+      playerVars['mute'] = 1;
+    };
 
   const els = document.querySelectorAll(selector);
 
@@ -268,13 +240,17 @@ const youtubeFacade = ({
   
       // needsYTApi = this.hasAttribute("js-api") || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
       const needsYTApi = navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
-  
+
+      if (el.hasAttribute("data-mute-for-mobile")) {
+        playerVars['mute'] = 1;
+      };
+
       if (needsYTApi) {
         // create a player using the youtube iframe api
-        renderYoutubePlayer(el, videoId);
+        renderYoutubePlayer(el, videoId, playerVars);
       } else {
         // create an iframe element and replace the current element with it
-        renderYouTubeIframe(el, videoId);
+        renderYouTubeIframe(el, videoId, playerVars);
       }
     });
   });

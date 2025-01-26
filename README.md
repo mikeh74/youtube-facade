@@ -1,9 +1,9 @@
 # Youtube Facade
 
-Youtube Facade script. Inspired by Paul Irish's [ Lite youtube embed](https://github.com/paulirish/lite-youtube-embed), which for most purposes is probably the better
+Youtube Facade script. Inspired by Paul Irish's [Lite youtube embed](https://github.com/paulirish/lite-youtube-embed), which for most purposes is probably the better
 option rather than this package.
 
-Demo version here: https://mikeh74.github.io/youtube-facade/demo
+Demo version here: <https://mikeh74.github.io/youtube-facade/demo>
 
 The reason for creating this version was so meet the following specific
 requirements:
@@ -33,5 +33,27 @@ load the script and call the default function:
     import youtubeFacade from '../index.js';
     youtubeFacade();
   </script>
+```
 
+# Modal Version
+
+To play the youtube video in a modal then you just add the following a custom
+data attribute *data-youtube-modal=""*, the attribute doesn't require to have
+a value set the script is just looking for the attribute:
+
+```html
+  <a href="https://www.youtube.com/watch?v=uIlwoXYcods"
+    aria-label="Play embedded youtube video" class="youtube-facade"
+    data-title="Youtube Facade - First one" target="_blank"
+    data-youtube-modal=""
+    rel="noopener noreferrer">
+    <img src="https://i.ytimg.com/vi/uIlwoXYcods/maxresdefault.jpg"
+      class="youtube-facade-img" alt="Click to play embedded youtube video">
+    <div class="youtube-facade-playbtn"></div>
+  </a>
+
+  <script type="module">
+    import youtubeFacade from '../index.js';
+    youtubeFacade();
+  </script>
 ```
