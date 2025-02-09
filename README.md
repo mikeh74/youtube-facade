@@ -1,19 +1,37 @@
 # Youtube Facade
 
-Youtube Facade script. Inspired by Paul Irish's [Lite youtube embed](https://github.com/paulirish/lite-youtube-embed), which for most purposes is probably the better
-option rather than this package.
+The Youtube Facade script is inspired by Paul Irish's
+[Lite YouTube Embed](https://github.com/paulirish/lite-youtube-embed),
+which is likely a better option for most people rather than this package.
 
-Demo version here: <https://mikeh74.github.io/youtube-facade/demo>
+[Demo version](https://mikeh74.github.io/youtube-facade/demo)
 
-The reason for creating this version was so meet the following specific
-requirements:
-* youtube iframe can be opened in a modal to focus the users attention rather
-than playing in place
-* it can fall back to simply playing in youtube is all esle fails
+This version doesn't use javascript components and has an option to play
+the video in a modal using a data attribute.
 
-The second one is much less likely to be an issue but relying just on javascript
-is breaking the progressive enhancement principle which might still be an issue
-in some situations.
+## Loading the script
+
+This project provides an es6 module which can be included in your project in a number of ways.
+
+If you are not using a javascript bundler, such as webpack, then you will need to copy the source files locally to your project and then load the script as an es6 module:
+
+```html
+  <script type="module">
+    import youtubeFacade from '/path/to/index.js';
+    youtubeFacade();
+  </script>
+```
+
+If you are using a javascript bundler and you have installed this package via
+npm then you can include it liks this:
+
+```javascript
+  // This imports the packakge into your code
+  import youtubeFacade from 'youtubeFacade';
+
+  // This initialises the package
+  youtubeFacade();
+```
 
 ## Basic Usage
 
