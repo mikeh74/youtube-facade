@@ -1,34 +1,33 @@
 /**
- * 
- * @param {string} url 
+ *
+ * @param {string} url
  */
 const addPreconnect = (url) => {
   const link = document.createElement('link');
   link.rel = 'preconnect';
   link.href = url;
   document.head.appendChild(link);
-}
+};
 
-const warmConnections = (function() {
+const warmConnections = (function () {
   let preconnnectsAdded = false;
   let preconnectUrls = [
     'https://www.youtube-nocookie.com',
-    'https://www.google.com'
+    'https://www.google.com',
   ];
 
-  return function() {
+  return function () {
     if (preconnnectsAdded) {
       return;
     }
-    preconnectUrls.forEach(url => {
+    preconnectUrls.forEach((url) => {
       addPreconnect(url);
     });
     preconnnectsAdded = true;
-  }
+  };
 })();
 
 function renderYoutubePlayer(el, videoId, playerVars) {
-
   // check if the element has the data-youtube-modal attribute
   const modal = el.getAttribute('data-youtube-modal');
 
@@ -45,7 +44,7 @@ function renderYoutubePlayer(el, videoId, playerVars) {
     toggleModal();
   }
 
-  createYouTubePlayer(target, videoId, playerVars).then(player => {
+  createYouTubePlayer(target, videoId, playerVars).then((player) => {
     console.log(player);
     window.myplayer = player;
   });
@@ -62,14 +61,14 @@ function renderYouTubeIframe(el, videoId, playerVars) {
     toggleModal();
     const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
     modalContent.appendChild(iframe);
-  } else {
+  }
+  else {
     // replace the element with the iframe
     el.replaceWith(iframe);
   }
 }
 
 function createYouTubeIframe(videoId, playerVars) {
-
   // convert playerVars object to query string
   const playerVarsString = new URLSearchParams(playerVars).toString();
 
@@ -88,7 +87,7 @@ function createYouTubeIframe(videoId, playerVars) {
  * Get the youtube video id from the element data-youtube-id attribute
  * or the href attribute if the data-youtube-id attribute is not present
  *
- * @param {HTMLElement} el 
+ * @param {HTMLElement} el
  * @return {string} videoId
  */
 function getYoutubeVideoId(el) {
@@ -105,7 +104,9 @@ function getYoutubeVideoId(el) {
   try {
     const url = new URL(href);
     videoId = url.searchParams.get('v');
-  } catch (error) {
+  }
+  catch (error) {
+    console.error(error);
     return null;
   }
 
@@ -123,8 +124,8 @@ let isYouTubeIframeAPILoaded = false;
 let youTubeIframeAPIPromise = null;
 
 async function loadYouTubeIframeAPI() {
-
   if (isYouTubeIframeAPILoaded) {
+    let YT = window.YT;
     return Promise.resolve(YT);
   }
 
@@ -134,11 +135,12 @@ async function loadYouTubeIframeAPI() {
 
   youTubeIframeAPIPromise = new Promise((resolve) => {
     var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
+    tag.src = 'https://www.youtube.com/iframe_api';
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     window.onYouTubeIframeAPIReady = () => {
+      let YT = window.YT;
       isYouTubeIframeAPILoaded = true;
       resolve(YT);
     };
@@ -156,8 +158,8 @@ async function createYouTubePlayer(elementId, videoId, playerVars) {
     allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',
     playerVars: playerVars,
     events: {
-      'onReady': onPlayerReady
-    }
+      onReady: onPlayerReady,
+    },
   });
 }
 
@@ -189,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const closeButtons = document.querySelectorAll('.youtube-facade-modal-close');
 
-  closeButtons.forEach(button => {
+  closeButtons.forEach((button) => {
     button.addEventListener('click', () => {
       closeModal();
     });
@@ -209,14 +211,14 @@ document.addEventListener('DOMContentLoaded', () => {
 const toggleModal = () => {
   const modal = document.querySelector('.youtube-facade-modal');
   modal.classList.toggle('youtube-facade-modal-active');
-}
+};
 
 const closeModal = () => {
   const modal = document.querySelector('.youtube-facade-modal');
   modal.classList.remove('youtube-facade-modal-active');
   const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
   modalContent.innerHTML = '';
-}
+};
 
 /**
  * Initialize the youtube facade
@@ -227,25 +229,23 @@ const closeModal = () => {
  */
 const youtubeFacade = ({
   selector = '.youtube-facade',
-  muteForAutoplay = true
+  muteForAutoplay = true,
 } = {}) => {
+  const playerVars = {
+    playsinline: 1,
+    autoplay: 1,
+    rel: 0,
+  };
 
-    const playerVars = {
-      'playsinline': 1,
-      'autoplay': 1,
-      'rel': 0,
-    };
-
-    if (muteForAutoplay && isMobile()) {
-      playerVars['mute'] = 1;
-    };
+  if (muteForAutoplay && isMobile()) {
+    playerVars['mute'] = 1;
+  };
 
   const els = document.querySelectorAll(selector);
 
-  els.forEach(el => {
-  
-    el.addEventListener('pointerover', warmConnections, {once: true});
-    el.addEventListener('focusin', warmConnections, {once: true});
+  els.forEach((el) => {
+    el.addEventListener('pointerover', warmConnections, { once: true });
+    el.addEventListener('focusin', warmConnections, { once: true });
 
     el.addEventListener('click', (e) => {
       e.preventDefault();
@@ -255,19 +255,20 @@ const youtubeFacade = ({
       const needsYTApi = navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
 
       // check if the element has the data-mute-for-mobile attribute and the user is on an iPhone
-      if (el.hasAttribute("data-mute-for-mobile") && isMobile()) {
+      if (el.hasAttribute('data-mute-for-mobile') && isMobile()) {
         playerVars['mute'] = 1;
       };
 
       if (needsYTApi) {
         // create a player using the youtube iframe api
         renderYoutubePlayer(el, videoId, playerVars);
-      } else {
+      }
+      else {
         // create an iframe element and replace the current element with it
         renderYouTubeIframe(el, videoId, playerVars);
       }
     });
   });
-}
+};
 
 export default youtubeFacade;
