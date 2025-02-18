@@ -4,7 +4,7 @@
   "description": "Youtube facade functionality",
   "main": "index.js",
   "scripts": {
-    "build": "npm run sass-compile && npm run lint-js",
+    "build": "npm run lint-js && npm run sass-compile",
     "sass-compile": "sass ./src/youtube-facade.scss ./dist/youtube-facade.css",
     "sass-watch": "sass -w ./src/youtube-facade.scss ./dist/youtube-facade.css",
     "lint-js": "eslint --fix ./index.js",
