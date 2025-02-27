@@ -4,11 +4,20 @@
   "description": "Youtube facade functionality",
   "main": "index.js",
   "scripts": {
-    "build": "npm run lint-js && npm run sass-compile",
-    "sass-compile": "sass ./src/youtube-facade.scss ./dist/youtube-facade.css",
-    "sass-watch": "sass -w ./src/youtube-facade.scss ./dist/youtube-facade.css",
+    "build": "parcel build",
+    "watch": "parcel watch",
     "lint-js": "eslint --fix ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "targets": {
+    "default": {
+      "sourceMap": true,
+      "distDir": "./dist",
+      "source": [
+        "./src/youtube-facade.js",
+        "./src/youtube-facade.scss"
+      ]
+    }
   },
   "repository": {
     "type": "git",
@@ -22,9 +31,11 @@
   "homepage": "https://github.com/mikeh74/youtube-facade#readme",
   "devDependencies": {
     "@eslint/js": "^9.20.0",
+    "@parcel/transformer-sass": "^2.13.3",
     "@stylistic/eslint-plugin": "^3.1.0",
     "eslint": "^9.20.0",
     "globals": "^15.14.0",
+    "parcel": "^2.13.3",
     "sass": "^1.83.4"
   }
 }

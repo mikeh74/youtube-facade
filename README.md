@@ -9,21 +9,33 @@ which is likely a better option for most people rather than this package.
 This version doesn't use javascript components and has an option to play
 the video in a modal using a data attribute.
 
-## Loading the script
+## Installation
 
-This project provides an es6 module which can be included in your project in a number of ways.
+The easiest way to install the package is to copy the dist folder to your
+project and then reference the css and js files in your code:
 
-If you are not using a javascript bundler, such as webpack, then you will need to copy the source files locally to your project and then load the script as an es6 module:
+```javascript
+<!DOCTYPE html>
+<html lang="en">
 
-```html
-  <script type="module">
-    import youtubeFacade from '/path/to/index.js';
+<head>
+...
+  <link rel="stylesheet" href="/path/to/dist/youtube-facade.css">
+...
+</head>
+<body>
+...
+
+  <script src="../dist/youtube-facade.js"></script>
+  <script>
     youtubeFacade();
   </script>
+</body>
+</html>
 ```
 
-If you are using a javascript bundler and you have installed this package via
-npm then you can include it liks this:
+If you are using a javascript bundler you can install the package by referencing
+by installing the package via npm and include it liks this:
 
 ```javascript
   // This imports the packakge into your code
@@ -47,13 +59,9 @@ load the script and call the default function:
     <div class="youtube-facade-playbtn"></div>
   </a>
 
-  <script type="module">
-    import youtubeFacade from '../index.js';
-    youtubeFacade();
-  </script>
 ```
 
-# Modal Version
+## Modal Version
 
 To play the youtube video in a modal then you just add the following a custom
 data attribute *data-youtube-modal=""*, the attribute doesn't require to have
@@ -69,9 +77,4 @@ a value set the script is just looking for the attribute:
       class="youtube-facade-img" alt="Click to play embedded youtube video">
     <div class="youtube-facade-playbtn"></div>
   </a>
-
-  <script type="module">
-    import youtubeFacade from '../index.js';
-    youtubeFacade();
-  </script>
 ```

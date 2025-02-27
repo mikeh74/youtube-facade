@@ -1,7 +1,8 @@
 $transition-settings: 0.33s ease-in-out;
 $light: #fff;
-$dark: #292929;
-
+$dark: hsl(0, 0%, 16%);
+$btn-color: hsl(0, 0%, 26%);
+$btn-color-hover: hsl(0, 0%, 30%);
 
 
 .youtube-facade,
@@ -161,25 +162,34 @@ $dark: #292929;
 
 .youtube-facade-modal-close {
   position: absolute;
-  top: -3rem;
+  top: -2rem;
   right: 0;
-  padding: 0.4rem;
+  padding: 0.5rem;
   cursor: pointer;
-  border-radius: 0.4rem;
-  background: transparent;
-  border: 1px solid $light;
+  border-radius: 50%;
+  background: $btn-color;
+  // border: 1px solid $light;
+  border: none;
   color: $light;
-  font-size: 1rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
   z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all $transition-settings;
 
+  @media (min-width: 576px) {
+    top: -3rem;
+  }
+
+  svg {
+    width: clamp(0.6rem, 3vw, 1.2rem);
+    height: auto;
+  }
+
   &:hover,
   &:focus {
-    background: $light;
-    color: $dark;
+    background: $btn-color-hover;
     transition: all $transition-settings;
   }
 
@@ -188,9 +198,9 @@ $dark: #292929;
     transition: all $transition-settings;
   }
 
-  &:hover path,
-  &:focus path {
-    fill: $dark;
-    transition: all $transition-settings;
-  }
+  // &:hover path,
+  // &:focus path {
+  //   fill: $dark;
+  //   transition: all $transition-settings;
+  // }
 }

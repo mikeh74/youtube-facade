@@ -34,9 +34,8 @@
       the video.</p>
 
     <div class="wrapper">
-      <a href="https://www.youtube.com/watch?v=uIlwoXYcods"
-        aria-label="Play embedded youtube video" class="youtube-facade"
-        data-title="Youtube Facade - First one" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.youtube.com/watch?v=uIlwoXYcods" aria-label="Play embedded youtube video"
+        class="youtube-facade" data-title="Youtube Facade - First one" target="_blank" rel="noopener noreferrer">
         <img src="https://i.ytimg.com/vi/uIlwoXYcods/maxresdefault.jpg" class="youtube-facade-img"
           alt="Click to play embedded youtube video">
         <div class="youtube-facade-playbtn"></div>
@@ -52,9 +51,9 @@
     </div>
   </div>
 
-  <script type="module">
-    import youtubeFacade from '../index.js';
-    youtubeFacade({muteForAutoplay: true});
+  <script src="../dist/youtube-facade.js"></script>
+  <script>
+    youtubeFacade({ muteForAutoplay: true });
   </script>
 
 </body>
