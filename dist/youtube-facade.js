@@ -713,27 +713,31 @@ const closeModal = ()=>{
         rel: 0
     };
     if (muteForAutoplay && (0, _utils.isMobile)()) playerVars['mute'] = 1;
+    (0, _utils.delegateEvent)(document, 'click', selector, (event)=>{
+        event.preventDefault();
+        handleVideoClick(event.target.closest(selector), playerVars);
+    });
+    (0, _utils.delegateEvent)(document, 'focusin', selector, (0, _utils.warmConnections), {
+        once: true
+    });
+    // Couldn't use event delegation for this one
     const els = document.querySelectorAll(selector);
     els.forEach((el)=>{
         el.addEventListener('pointerover', (0, _utils.warmConnections), {
             once: true
         });
-        el.addEventListener('focusin', (0, _utils.warmConnections), {
-            once: true
-        });
-        el.addEventListener('click', (e)=>{
-            e.preventDefault();
-            const videoId = (0, _utils.getYoutubeVideoId)(el);
-            const needsYTApi = el.hasAttribute('data-use-youtube-api') || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
-            // check if the element has the data-mute-for-mobile attribute and the user is on an iPhone
-            if (el.hasAttribute('data-mute-for-mobile') && (0, _utils.isMobile)()) playerVars['mute'] = 1;
-            if (needsYTApi) // create a player using the youtube iframe api
-            renderYoutubePlayer(el, videoId, playerVars);
-            else // create an iframe element and replace the current element with it
-            renderYouTubeIframe(el, videoId, playerVars);
-        });
     });
 };
+function handleVideoClick(el, playerVars) {
+    const videoId = (0, _utils.getYoutubeVideoId)(el);
+    const needsYTApi = el.hasAttribute('data-use-youtube-api') || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
+    // check if the element has the data-mute-for-mobile attribute and the user is on an iPhone
+    if (el.hasAttribute('data-mute-for-mobile') && (0, _utils.isMobile)()) playerVars['mute'] = 1;
+    if (needsYTApi) // create a player using the youtube iframe api
+    renderYoutubePlayer(el, videoId, playerVars);
+    else // create an iframe element and replace the current element with it
+    renderYouTubeIframe(el, videoId, playerVars);
+}
 exports.default = youtubeFacade;
 
 },{"./utils":"en4he","./loader":"1Ef8k","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"en4he":[function(require,module,exports,__globalThis) {
@@ -745,6 +749,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getYoutubeVideoId", ()=>getYoutubeVideoId);
 parcelHelpers.export(exports, "isMobile", ()=>isMobile);
 parcelHelpers.export(exports, "warmConnections", ()=>warmConnections);
+parcelHelpers.export(exports, "delegateEvent", ()=>delegateEvent);
 const addPreconnect = (url)=>{
     const link = document.createElement('link');
     link.rel = 'preconnect';
@@ -790,6 +795,20 @@ const warmConnections = function() {
 // mobile device, and the user agent includes 'Intel Mac OS X'
 function isMobile() {
     return window.innerWidth < 600 && navigator.userAgent.includes('Mobi');
+}
+/**
+ * Delegate an event to a parent element
+ *
+ * @param {HTMLElement} parent - The parent element to delegate the event to
+ * @param {string} eventType - The type of event to listen for
+ * @param {string} selector - The selector for the child elements to delegate the event to
+ * @param {Function} handler - The event handler function
+ */ function delegateEvent(parent, eventType, selector, handler, options = false) {
+    parent.addEventListener(eventType, function(event) {
+        const targetElement = event.target.closest(selector);
+        // this is that 'parent' element at this point
+        if (this.contains(targetElement)) handler.call(targetElement, event);
+    }, options);
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports,__globalThis) {

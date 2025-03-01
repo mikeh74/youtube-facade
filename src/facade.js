@@ -1,4 +1,4 @@
-import { getYoutubeVideoId, isMobile, warmConnections } from './utils';
+import { getYoutubeVideoId, isMobile, warmConnections, delegateEvent } from './utils';
 import { createYouTubePlayer } from './loader';
 
 /**
@@ -143,32 +143,37 @@ const youtubeFacade = ({
     playerVars['mute'] = 1;
   };
 
-  const els = document.querySelectorAll(selector);
+  delegateEvent(document, 'click', selector, (event) => {
+    event.preventDefault();
+    handleVideoClick(event.target.closest(selector), playerVars);
+  });
 
+  delegateEvent(document, 'focusin', selector, warmConnections, { once: true });
+
+  // Couldn't use event delegation for this one
+  const els = document.querySelectorAll(selector);
   els.forEach((el) => {
     el.addEventListener('pointerover', warmConnections, { once: true });
-    el.addEventListener('focusin', warmConnections, { once: true });
-
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      const videoId = getYoutubeVideoId(el);
-      const needsYTApi = el.hasAttribute('data-use-youtube-api') || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
-
-      // check if the element has the data-mute-for-mobile attribute and the user is on an iPhone
-      if (el.hasAttribute('data-mute-for-mobile') && isMobile()) {
-        playerVars['mute'] = 1;
-      };
-
-      if (needsYTApi) {
-        // create a player using the youtube iframe api
-        renderYoutubePlayer(el, videoId, playerVars);
-      }
-      else {
-        // create an iframe element and replace the current element with it
-        renderYouTubeIframe(el, videoId, playerVars);
-      }
-    });
   });
 };
+
+function handleVideoClick(el, playerVars) {
+  const videoId = getYoutubeVideoId(el);
+  const needsYTApi = el.hasAttribute('data-use-youtube-api') || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
+
+  // check if the element has the data-mute-for-mobile attribute and the user is on an iPhone
+  if (el.hasAttribute('data-mute-for-mobile') && isMobile()) {
+    playerVars['mute'] = 1;
+  };
+
+  if (needsYTApi) {
+    // create a player using the youtube iframe api
+    renderYoutubePlayer(el, videoId, playerVars);
+  }
+  else {
+    // create an iframe element and replace the current element with it
+    renderYouTubeIframe(el, videoId, playerVars);
+  }
+}
 
 export default youtubeFacade;

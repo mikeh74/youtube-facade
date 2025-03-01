@@ -63,4 +63,23 @@ function isMobile() {
   return window.innerWidth < 600 && navigator.userAgent.includes('Mobi');
 }
 
-export { getYoutubeVideoId, isMobile, warmConnections };
+/**
+ * Delegate an event to a parent element
+ *
+ * @param {HTMLElement} parent - The parent element to delegate the event to
+ * @param {string} eventType - The type of event to listen for
+ * @param {string} selector - The selector for the child elements to delegate the event to
+ * @param {Function} handler - The event handler function
+ */
+function delegateEvent(parent, eventType, selector, handler, options = false) {
+  parent.addEventListener(eventType, function (event) {
+    const targetElement = event.target.closest(selector);
+
+    // this is that 'parent' element at this point
+    if (this.contains(targetElement)) {
+      handler.call(targetElement, event);
+    }
+  }, options);
+}
+
+export { getYoutubeVideoId, isMobile, warmConnections, delegateEvent };
