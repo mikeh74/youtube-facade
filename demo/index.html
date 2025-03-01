@@ -18,6 +18,7 @@
       display: flex;
       justify-content: space-between;
       gap: 1.2rem;
+      margin-bottom: 1rem;
     }
   </style>
 
@@ -42,19 +43,24 @@
       </a>
 
       <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" data-youtube-modal="true"
-        aria-label="Play embedded youtube video" class="youtube-facade" data-youtube-modal=""
+        aria-label="Play embedded youtube video" class="youtube-facade"
         data-title="Youtube Facade - Second one" target="_blank" rel="noopener noreferrer">
         <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
           alt="Click to play embedded youtube video">
         <div class="youtube-facade-playbtn"></div>
       </a>
     </div>
+
+    <button id="add" type="button">Add dynamically</button>
+    <div id="video-target" class="wrapper"></div>
   </div>
 
   <script src="../dist/youtube-facade.js"></script>
   <script>
     youtubeFacade({ muteForAutoplay: true });
   </script>
+
+  <script src="./add.js"></script>
 
 </body>
 </html>
