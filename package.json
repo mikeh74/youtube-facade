@@ -1,12 +1,12 @@
 {
   "name": "youtube-facade",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Youtube facade functionality",
   "main": "index.js",
   "scripts": {
     "build": "parcel build",
     "watch": "parcel watch",
-    "lint-js": "eslint --fix ./index.js",
+    "lint-js": "eslint --fix ./index.js ./src/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "targets": {

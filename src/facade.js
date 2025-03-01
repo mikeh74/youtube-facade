@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // add event listener for ESC key and close the modal if it is open
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' || e.key === 'Esc') {
       closeModal();
     }
   });
