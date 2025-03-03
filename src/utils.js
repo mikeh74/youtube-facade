@@ -70,6 +70,7 @@ function isMobile() {
  * @param {string} eventType - The type of event to listen for
  * @param {string} selector - The selector for the child elements to delegate the event to
  * @param {Function} handler - The event handler function
+ * @param {object} options - The options for the event listener
  */
 function delegateEvent(parent, eventType, selector, handler, options = false) {
   parent.addEventListener(eventType, function (event) {

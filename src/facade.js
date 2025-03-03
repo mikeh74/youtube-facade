@@ -82,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <path class="youtube-facade-model-close-svg" fill="#ffffff" d="M 16.830797 20.000301 L 10.000151 13.16957 L 3.169428 20.000301 L -0 16.830883 L 6.830741 10.000151 L -0 3.169418 L 3.169428 0 L 10.000151 6.830732 L 16.830797 0 L 20 3.169418 L 13.16958 10.000151 L 20 16.830883 Z"/>
           </svg>
         </button>
-        <div id="youtube-facade-modal-placeholder" class="youtube-facade-modal-inner">
+        <div class="youtube-facade-modal-content-inner">
+          <div id="youtube-facade-modal-placeholder" class="youtube-facade-modal-inner"></div>
         </div>
       </div>
     `;

@@ -6,7 +6,7 @@ which is likely a better option for most people rather than this package.
 
 [Demo version](https://mikeh74.github.io/youtube-facade/demo)
 
-This version doesn't use javascript components and has an option to play
+This version doesn't use javascript custom elements and has an option to play
 the video in a modal using a data attribute.
 
 ## Installation
