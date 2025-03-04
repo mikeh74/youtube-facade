@@ -1,14 +1,13 @@
 {
   "name": "youtube-facade",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Youtube facade package",
   "main": "index.js",
   "exports": "./index.js",
   "scripts": {
     "build": "parcel build",
     "watch": "parcel watch",
-    "lint-js": "eslint --fix ./index.js ./src/**/*.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint-js": "eslint --fix ./index.js ./src/**/*.js"
   },
   "targets": {
     "default": {
