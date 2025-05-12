@@ -117,10 +117,13 @@ const toggleModal = () => {
 };
 
 const closeModal = () => {
-  const modal = document.querySelector('.youtube-facade-modal');
-  modal.classList.remove('youtube-facade-modal-active');
-  const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
-  modalContent.innerHTML = '';
+  requestAnimationFrame(() => {
+    const modal = document.querySelector('.youtube-facade-modal');
+    const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
+    modalContent.innerHTML = '';
+    // remove class last
+    modal.classList.remove('youtube-facade-modal-active');
+  });
 };
 
 /**

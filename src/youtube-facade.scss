@@ -124,15 +124,7 @@ $play-btn-height: 32px;
 }
 
 .youtube-facade-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: $dark;
-  z-index: 10000;
-  overflow-y: hidden;
+  pointer-events: none; // Prevent interaction when hidden
   opacity: 0;
   transition: opacity $transition-settings;
 
@@ -157,9 +149,14 @@ $play-btn-height: 32px;
   justify-content: center;
   opacity: 1;
   transition: opacity $transition-settings;
+
+  .youtube-facade-modal-content {
+    display: block;
+  }
 }
 
 .youtube-facade-modal-content {
+  display: none;
   max-height: 100vh;
   position: relative;
   width: 98vw;
@@ -179,6 +176,7 @@ $play-btn-height: 32px;
     margin: auto;
     border: 0;
     padding: 0;
+    width: 100%;
     aspect-ratio: 16/9;
   }
 }
