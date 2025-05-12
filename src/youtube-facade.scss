@@ -8,7 +8,7 @@ $play-btn-width: 45px;
 $play-btn-height: 32px;
 
 @mixin mediaqry {
-  @media (min-width: 768px) and (max-aspect-ratio: 16/9) {
+  @media (min-width: 768px) and (max-aspect-ratio: 17/9) {
     @content;
   }
 }
@@ -213,7 +213,7 @@ $play-btn-height: 32px;
   }
 
   svg {
-    width: clamp(0.6rem, 3vw, 1.2rem);
+    width: clamp(0.9rem, 3vw, 1.2rem);
     height: auto;
   }
 

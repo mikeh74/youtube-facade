@@ -76,7 +76,7 @@ function delegateEvent(parent, eventType, selector, handler, options = false) {
   parent.addEventListener(eventType, function (event) {
     const targetElement = event.target.closest(selector);
 
-    // this is that 'parent' element at this point
+    // *this* is the 'parent' element at this point
     if (this.contains(targetElement)) {
       handler.call(targetElement, event);
     }
