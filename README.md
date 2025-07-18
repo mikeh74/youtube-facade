@@ -37,7 +37,14 @@ Copy the `dist` folder to your project and reference the CSS and JS files:
 Install via npm and import in your code:
 
 ```bash
-npm install youtube-facade
+npm install git+https://github.com/mikeh74/youtube-facade.git#<commit-or-tag>
+```
+
+Replace `<commit-or-tag>` with the desired commit hash, branch name, or git tag.  
+For example, to install a specific tag:
+
+```bash
+npm install git+https://github.com/mikeh74/youtube-facade.git#v1.1.0
 ```
 
 ```javascript
