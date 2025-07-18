@@ -113,6 +113,7 @@ $play-btn-height: 32px;
   pointer-events: none;
 }
 
+/* Visually hidden utility for accessibility */
 .youtube-facade-visually-hidden {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -123,13 +124,14 @@ $play-btn-height: 32px;
   width: 1px;
 }
 
+/* Modal styles */
 .youtube-facade-modal {
   pointer-events: none; // Prevent interaction when hidden
   opacity: 0;
   transition: opacity $transition-settings;
 
   &-inner {
-    background-color: #000;
+    background-color: $dark;
     width: 100%;
   }
 }
@@ -143,7 +145,7 @@ $play-btn-height: 32px;
   right: 0;
   background-color: $dark;
   z-index: 10000;
-  overflow-y: hidden;
+  overflow-y: auto; // Allow scrolling if content overflows
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,12 +174,13 @@ $play-btn-height: 32px;
     position: relative;
     height: 100%;
     max-height: 100vh;
-    background-color: #000;
+    background-color: $dark;
     margin: auto;
     border: 0;
     padding: 0;
     width: 100%;
     aspect-ratio: 16/9;
+    overflow-y: auto; // Ensure modal content is scrollable
   }
 }
 
@@ -187,6 +190,7 @@ $play-btn-height: 32px;
   border: 0;
 }
 
+/* Close button styles and accessibility improvements */
 .youtube-facade-modal-close {
   position: fixed;
   top: 0.5rem;
@@ -203,6 +207,7 @@ $play-btn-height: 32px;
   justify-content: center;
   align-items: center;
   transition: background $transition-settings;
+  outline: none;
 
   @include mediaqry {
     position: absolute;
@@ -219,6 +224,7 @@ $play-btn-height: 32px;
   &:focus {
     background: $btn-color-hover;
     transition: all $transition-settings;
+    outline: 2px solid $btn-color-hover; // Accessibility: visible focus
   }
 
   path {

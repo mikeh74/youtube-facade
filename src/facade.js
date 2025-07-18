@@ -2,64 +2,78 @@ import { getYoutubeVideoId, isMobile, warmConnections, delegateEvent } from './u
 import { createYouTubePlayer } from './loader';
 
 /**
- * Render a youtube player using the youtube iframe api
- *
- * @param {HTMLElement} el
- * @param {String} videoId
- * @param {Array} playerVars
+ * Renders a YouTube player using the YouTube iframe API.
+ * @param {HTMLElement} el - The element to attach the player to.
+ * @param {string} videoId - The YouTube video ID.
+ * @param {object} playerVars - Player configuration variables.
  */
 function renderYoutubePlayer(el, videoId, playerVars) {
-  // check if the element has the data-youtube-modal attribute
+  if (!el || !(el instanceof HTMLElement)) {
+    console.error('renderYoutubePlayer: Invalid element');
+    return;
+  }
   const modal = el.getAttribute('data-youtube-modal');
-
   let target = el;
-
   if (modal) {
     const modalPlaceholder = document.getElementById('youtube-facade-modal-placeholder');
-
-    // create a new iframe element to insert into the modal placeholder element
+    if (!modalPlaceholder) {
+      console.error('renderYoutubePlayer: Modal placeholder not found');
+      return;
+    }
     const newDiv = document.createElement('div');
     newDiv.classList.add('youtube-facade-iframe');
     modalPlaceholder.appendChild(newDiv);
     target = newDiv;
     toggleModal();
   }
-
-  createYouTubePlayer(target, videoId, playerVars).then((player) => {
-    // console.log(player);
-    window.yfplayer = player;
-  });
+  createYouTubePlayer(target, videoId, playerVars)
+    .then((player) => {
+      window.yfplayer = player;
+    })
+    .catch((err) => {
+      console.error('renderYoutubePlayer: Failed to create YouTube player', err);
+    });
 }
 
 /**
- * Render a youtube iframe element
- *
- * @param {HTMLElement} el
- * @param {String} videoId
- * @param {Array} playerVars
+ * Renders a YouTube iframe element (no API).
+ * @param {HTMLElement} el - The element to replace or attach the iframe to.
+ * @param {string} videoId - The YouTube video ID.
+ * @param {object} playerVars - Player configuration variables.
  */
 function renderYouTubeIframe(el, videoId, playerVars) {
+  if (!el || !(el instanceof HTMLElement)) {
+    console.error('renderYouTubeIframe: Invalid element');
+    return;
+  }
   const iframe = createYouTubeIframe(videoId, playerVars);
-
-  // check if the element has the data-youtube-modal attribute
   const modal = el.getAttribute('data-youtube-modal');
-
   if (modal) {
-    // toggle the modal
     toggleModal();
     const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
+    if (!modalContent) {
+      console.error('renderYouTubeIframe: Modal content not found');
+      return;
+    }
     modalContent.appendChild(iframe);
   }
   else {
-    // replace the element with the iframe
     el.replaceWith(iframe);
   }
 }
 
+/**
+ * Creates a YouTube iframe element.
+ * @param {string} videoId - The YouTube video ID.
+ * @param {object} playerVars - Player configuration variables.
+ * @returns {HTMLIFrameElement} The created iframe element.
+ */
 function createYouTubeIframe(videoId, playerVars) {
-  // convert playerVars object to query string
+  if (!videoId || typeof videoId !== 'string') {
+    console.error('createYouTubeIframe: Invalid videoId');
+    return null;
+  }
   const playerVarsString = new URLSearchParams(playerVars).toString();
-
   const iframe = document.createElement('iframe');
   iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?${playerVarsString}`);
   iframe.setAttribute('width', '720');
@@ -113,25 +127,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const toggleModal = () => {
   const modal = document.querySelector('.youtube-facade-modal');
+  if (!modal) {
+    console.error('toggleModal: Modal not found');
+    return;
+  }
   modal.classList.toggle('youtube-facade-modal-active');
 };
 
+/**
+ * Closes the modal and clears its content.
+ */
 const closeModal = () => {
   requestAnimationFrame(() => {
     const modal = document.querySelector('.youtube-facade-modal');
     const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
-    modalContent.innerHTML = '';
-    // remove class last
-    modal.classList.remove('youtube-facade-modal-active');
+    if (modalContent) {
+      modalContent.innerHTML = '';
+    }
+    if (modal) {
+      modal.classList.remove('youtube-facade-modal-active');
+    }
   });
 };
 
 /**
- * Initialize the youtube facade
- *
- * @param {object} options
- * @param {string} options.selector
- * @param {boolean} options.muteForAutoplay
+ * Initializes the YouTube facade component and event delegation.
+ * @param {object} options - Configuration options.
+ * @param {string} options.selector - CSS selector for YouTube elements.
+ * @param {boolean} options.muteForAutoplay - Whether to mute for autoplay on mobile.
  */
 const youtubeFacade = ({
   selector = '.youtube-facade',
@@ -142,18 +165,19 @@ const youtubeFacade = ({
     autoplay: 1,
     rel: 0,
   };
-
   if (muteForAutoplay && isMobile()) {
     playerVars['mute'] = 1;
-  };
-
+  }
   delegateEvent(document, 'click', selector, (event) => {
     event.preventDefault();
-    handleVideoClick(event.target.closest(selector), playerVars);
+    const el = event.target.closest(selector);
+    if (!el) {
+      console.error('youtubeFacade: Clicked element not found for selector', selector);
+      return;
+    }
+    handleVideoClick(el, playerVars);
   });
-
   delegateEvent(document, 'focusin', selector, warmConnections, { once: true });
-
   // Couldn't use event delegation for this one
   const els = document.querySelectorAll(selector);
   els.forEach((el) => {
@@ -161,21 +185,29 @@ const youtubeFacade = ({
   });
 };
 
+/**
+ * Handles click events for YouTube elements, choosing API or iframe.
+ * @param {HTMLElement} el - The clicked element.
+ * @param {object} playerVars - Player configuration variables.
+ */
 function handleVideoClick(el, playerVars) {
+  if (!el || !(el instanceof HTMLElement)) {
+    console.error('handleVideoClick: Invalid element');
+    return;
+  }
   const videoId = getYoutubeVideoId(el);
+  if (!videoId) {
+    console.error('handleVideoClick: No videoId found');
+    return;
+  }
   const needsYTApi = el.hasAttribute('data-use-youtube-api') || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
-
-  // check if the element has the data-mute-for-mobile attribute and the user is on an iPhone
   if (el.hasAttribute('data-mute-for-mobile') && isMobile()) {
     playerVars['mute'] = 1;
-  };
-
+  }
   if (needsYTApi) {
-    // create a player using the youtube iframe api
     renderYoutubePlayer(el, videoId, playerVars);
   }
   else {
-    // create an iframe element and replace the current element with it
     renderYouTubeIframe(el, videoId, playerVars);
   }
 }
