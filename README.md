@@ -92,6 +92,31 @@ To play the YouTube video in a modal, add the `data-youtube-modal` attribute (no
 
 ---
 
+## Custom Target Placement
+
+To place the YouTube player in a different element instead of replacing the clicked link, use the `data-target` attribute with a CSS selector:
+
+```html
+<a href="https://www.youtube.com/watch?v=uIlwoXYcods"
+   aria-label="Play embedded YouTube video"
+   class="youtube-facade"
+   data-title="Youtube Facade - First one"
+   target="_blank" rel="noopener noreferrer"
+   data-target="#video-container">
+  <img src="https://i.ytimg.com/vi/uIlwoXYcods/maxresdefault.jpg"
+       class="youtube-facade-img" alt="Click to play embedded YouTube video">
+  <div class="youtube-facade-playbtn"></div>
+</a>
+
+<div id="video-container">
+  <!-- This element will be replaced by the YouTube player -->
+</div>
+```
+
+**Note:** Modal playback takes precedence over custom target placement. If both `data-youtube-modal` and `data-target` are present, the video will open in a modal.
+
+---
+
 ## API Reference
 
 ```javascript
@@ -103,6 +128,17 @@ youtubeFacade({
 
 - `selector`: CSS selector for YouTube links (default: `.youtube-facade`)
 - `muteForAutoplay`: Mute video for autoplay on mobile devices (default: `true`)
+
+### Data Attributes
+
+The following data attributes can be used on YouTube facade elements:
+
+- `data-youtube-modal`: Opens the video in a modal overlay (takes precedence over `data-target`)
+- `data-target`: CSS selector for the element that should be replaced by the player/iframe
+- `data-title`: Descriptive title for the video (used for accessibility)
+- `data-youtube-id`: Alternative way to specify the video ID (instead of using the href URL)
+- `data-use-youtube-api`: Forces use of the YouTube API instead of iframe
+- `data-mute-for-mobile`: Mutes the video on mobile devices
 
 ---
 
