@@ -14,6 +14,7 @@ function renderYoutubePlayer(el, videoId, playerVars) {
   }
   const modal = el.getAttribute('data-youtube-modal');
   let target = el;
+
   if (modal) {
     const modalPlaceholder = document.getElementById('youtube-facade-modal-placeholder');
     if (!modalPlaceholder) {
@@ -26,6 +27,25 @@ function renderYoutubePlayer(el, videoId, playerVars) {
     target = newDiv;
     toggleModal();
   }
+  else {
+    // Check for data-target attribute
+    const targetSelector = el.getAttribute('data-target');
+    if (targetSelector) {
+      try {
+        const targetElement = document.querySelector(targetSelector);
+        if (targetElement) {
+          target = targetElement;
+        }
+        else {
+          console.warn(`renderYoutubePlayer: Target element not found for selector "${targetSelector}", using original element`);
+        }
+      }
+      catch (err) {
+        console.error(`renderYoutubePlayer: Invalid selector "${targetSelector}"`, err);
+      }
+    }
+  }
+
   createYouTubePlayer(target, videoId, playerVars)
     .then((player) => {
       window.yfplayer = player;
@@ -48,6 +68,7 @@ function renderYouTubeIframe(el, videoId, playerVars) {
   }
   const iframe = createYouTubeIframe(videoId, playerVars);
   const modal = el.getAttribute('data-youtube-modal');
+
   if (modal) {
     toggleModal();
     const modalContent = document.querySelector('#youtube-facade-modal-placeholder');
@@ -58,7 +79,26 @@ function renderYouTubeIframe(el, videoId, playerVars) {
     modalContent.appendChild(iframe);
   }
   else {
-    el.replaceWith(iframe);
+    // Check for data-target attribute
+    const targetSelector = el.getAttribute('data-target');
+    let targetElement = el; // Default to original element
+
+    if (targetSelector) {
+      try {
+        const foundTarget = document.querySelector(targetSelector);
+        if (foundTarget) {
+          targetElement = foundTarget;
+        }
+        else {
+          console.warn(`renderYouTubeIframe: Target element not found for selector "${targetSelector}", using original element`);
+        }
+      }
+      catch (err) {
+        console.error(`renderYouTubeIframe: Invalid selector "${targetSelector}"`, err);
+      }
+    }
+
+    targetElement.replaceWith(iframe);
   }
 }
 

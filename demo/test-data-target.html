@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youtube Facade - Data Target Test</title>
+
+  <link rel="stylesheet" href="../dist/youtube-facade.css">
+
+  <style>
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .test-section {
+      margin-bottom: 40px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .test-target {
+      border: 2px dashed #007cba;
+      padding: 20px;
+      margin: 10px 0;
+      text-align: center;
+      background-color: #f0f8ff;
+    }
+
+    .youtube-facade {
+      display: inline-block;
+      margin: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Youtube Facade - Data Target Test</h1>
+
+    <div class="test-section">
+      <h2>Test 1: Basic data-target functionality</h2>
+      <p>Click the YouTube facade below. It should replace the blue target area instead of replacing itself.</p>
+      
+      <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" 
+         aria-label="Play embedded youtube video"
+         class="youtube-facade" 
+         data-title="Youtube Facade - Target Test 1"
+         data-target="#target1"
+         target="_blank" rel="noopener noreferrer">
+        <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" 
+             class="youtube-facade-img"
+             alt="Click to play embedded youtube video">
+        <div class="youtube-facade-playbtn"></div>
+      </a>
+
+      <div id="target1" class="test-target">
+        Target 1: This area should be replaced by the YouTube player
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 2: data-target with modal (modal should take precedence)</h2>
+      <p>Click the YouTube facade below. It should open in a modal, ignoring the data-target.</p>
+      
+      <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" 
+         aria-label="Play embedded youtube video"
+         class="youtube-facade" 
+         data-title="Youtube Facade - Target Test 2"
+         data-target="#target2"
+         data-youtube-modal="true"
+         target="_blank" rel="noopener noreferrer">
+        <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" 
+             class="youtube-facade-img"
+             alt="Click to play embedded youtube video">
+        <div class="youtube-facade-playbtn"></div>
+      </a>
+
+      <div id="target2" class="test-target">
+        Target 2: This should NOT be replaced (modal takes precedence)
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 3: Invalid data-target selector</h2>
+      <p>Click the YouTube facade below. It should fallback to normal behavior (replace itself) since #nonexistent doesn't exist.</p>
+      
+      <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" 
+         aria-label="Play embedded youtube video"
+         class="youtube-facade" 
+         data-title="Youtube Facade - Target Test 3"
+         data-target="#nonexistent"
+         target="_blank" rel="noopener noreferrer">
+        <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" 
+             class="youtube-facade-img"
+             alt="Click to play embedded youtube video">
+        <div class="youtube-facade-playbtn"></div>
+      </a>
+
+      <div id="target3" class="test-target">
+        Target 3: This should NOT be replaced (selector doesn't match)
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 4: No data-target (normal behavior)</h2>
+      <p>Click the YouTube facade below. It should replace itself (normal behavior).</p>
+      
+      <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" 
+         aria-label="Play embedded youtube video"
+         class="youtube-facade" 
+         data-title="Youtube Facade - Normal behavior"
+         target="_blank" rel="noopener noreferrer">
+        <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" 
+             class="youtube-facade-img"
+             alt="Click to play embedded youtube video">
+        <div class="youtube-facade-playbtn"></div>
+      </a>
+
+      <div id="target4" class="test-target">
+        Target 4: This should NOT be replaced (no data-target)
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../dist/youtube-facade.js"></script>
+  <script>
+    youtubeFacade({ muteForAutoplay: true });
+  </script>
+
+</body>
+</html>
