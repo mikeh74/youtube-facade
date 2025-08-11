@@ -126,6 +126,12 @@
   <script src="../dist/youtube-facade.js"></script>
   <script>
     youtubeFacade({ muteForAutoplay: true });
+
+    // Example: Listen for the custom event elsewhere in your code
+    document.addEventListener('youtube-facade:activated', (e) => {
+      console.log('YouTube facade activated:', e.detail);
+    });
+
   </script>
 
   <script src="./add.js"></script>

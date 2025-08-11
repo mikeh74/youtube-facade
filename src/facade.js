@@ -92,11 +92,9 @@ function createYouTubeIframe(videoId, playerVars) {
   return iframe;
 }
 
-// on DomContentLoaded add modal code to the body
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.createElement('div');
-  modal.classList.add('youtube-facade-modal');
-  modal.innerHTML = `
+// Closure for holding the modal template, allowing override
+const modalTemplate = (() => {
+  let template = `
       <div class="youtube-facade-modal-content">
         <button class="youtube-facade-modal-close" aria-label="Close modal">
           <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -104,11 +102,27 @@ document.addEventListener('DOMContentLoaded', () => {
           </svg>
         </button>
         <div class="youtube-facade-modal-content-inner">
-          <div id="youtube-facade-modal-placeholder" class="youtube-facade-modal-inner"></div>
+          <div id="youtube-facade-modal-placeholder"
+            class="youtube-facade-modal-inner"></div>
         </div>
       </div>
     `;
+  return {
+    get: () => template,
+    set: (newTemplate) => {
+      if (typeof newTemplate === 'string') {
+        template = newTemplate;
+      }
+    },
+  };
+})();
 
+// Usage: modalTemplate.get() to retrieve, modalTemplate.set(newValue) to override
+
+const setup = () => {
+  const modal = document.createElement('div');
+  modal.classList.add('youtube-facade-modal');
+  modal.innerHTML = modalTemplate.get();
   document.body.appendChild(modal);
 
   // ------ Wire up the close button ------
@@ -129,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       closeModal();
     }
   });
-});
+};
 
 const toggleModal = () => {
   const modal = document.querySelector('.youtube-facade-modal');
@@ -161,16 +175,26 @@ const closeModal = () => {
  * @param {object} options - Configuration options.
  * @param {string} options.selector - CSS selector for YouTube elements.
  * @param {boolean} options.muteForAutoplay - Whether to mute for autoplay on mobile.
+ * @param {string|null} options.customModalTemplate - Custom modal template HTML string.
  */
 const youtubeFacade = ({
   selector = '.youtube-facade',
   muteForAutoplay = true,
+  customModalTemplate = null,
 } = {}) => {
+  // Set the modal template if provided
+  if (customModalTemplate && typeof customModalTemplate === 'string') {
+    modalTemplate.set(customModalTemplate);
+  }
+
+  setup(); // Ensure modal is set up
+
   const playerVars = {
     playsinline: 1,
     autoplay: 1,
     rel: 0,
   };
+
   if (muteForAutoplay && isMobile()) {
     playerVars['mute'] = 1;
   }
@@ -216,6 +240,21 @@ function handleVideoClick(el, playerVars) {
   else {
     renderYouTubeIframe(el, videoId, playerVars);
   }
+  // Trigger custom event
+  dispatchFacadeActivated(el, videoId);
+}
+
+/**
+ * Dispatches a custom event when a YouTube facade is activated.
+ * @param {HTMLElement} el - The element that triggered the event.
+ * @param {string} videoId - The YouTube video ID.
+ */
+function dispatchFacadeActivated(el, videoId) {
+  const event = new CustomEvent('youtube-facade-active', {
+    detail: { element: el, videoId },
+    bubbles: true,
+  });
+  el.dispatchEvent(event);
 }
 
 export default youtubeFacade;
