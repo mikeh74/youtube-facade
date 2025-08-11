@@ -92,6 +92,29 @@ To play the YouTube video in a modal, add the `data-youtube-modal` attribute (no
 
 ---
 
+## Targeting a Specific Element
+
+You can use the `data-target` attribute to specify a different element to receive the YouTube embed when the facade is activated. This is useful for advanced layouts or when you want the video to appear elsewhere in the DOM.
+
+**Example:**
+
+```html
+<!-- Facade link -->
+<a href="https://www.youtube.com/watch?v=uIlwoXYcods"
+   class="youtube-facade"
+   data-target="#video-container">
+  <img src="https://i.ytimg.com/vi/uIlwoXYcods/maxresdefault.jpg" alt="Click to play embedded YouTube video">
+  <div class="youtube-facade-playbtn"></div>
+</a>
+
+<!-- Target container -->
+<div id="video-container"></div>
+```
+
+When the facade is clicked, the YouTube embed will be placed inside the element with the selector specified by `data-target`. If the target element is not found, the embed will appear in place of the facade link as usual.
+
+---
+
 ## API Reference
 
 ```javascript

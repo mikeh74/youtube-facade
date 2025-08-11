@@ -1,4 +1,10 @@
-import { getYoutubeVideoId, isMobile, warmConnections, delegateEvent } from './utils';
+import {
+  getYoutubeVideoId,
+  isMobile,
+  warmConnections,
+  delegateEvent,
+  getTargetElement,
+} from './utils';
 import { createYouTubePlayer } from './loader';
 
 /**
@@ -13,7 +19,7 @@ function renderYoutubePlayer(el, videoId, playerVars) {
     return;
   }
   const modal = el.getAttribute('data-youtube-modal');
-  let target = el;
+  let target = getTargetElement(el);
   if (modal) {
     const modalPlaceholder = document.getElementById('youtube-facade-modal-placeholder');
     if (!modalPlaceholder) {
@@ -25,19 +31,6 @@ function renderYoutubePlayer(el, videoId, playerVars) {
     modalPlaceholder.appendChild(newDiv);
     target = newDiv;
     toggleModal();
-  }
-  else {
-    const targetSelector = el.getAttribute('data-target');
-    if (targetSelector) {
-      const targetElement = document.querySelector(targetSelector);
-      if (targetElement) {
-        target = targetElement;
-      }
-      else {
-        console.error('renderYoutubePlayer: Target element not found for selector:', targetSelector);
-        // Fall back to using the original element
-      }
-    }
   }
   createYouTubePlayer(target, videoId, playerVars)
     .then((player) => {
@@ -71,20 +64,8 @@ function renderYouTubeIframe(el, videoId, playerVars) {
     modalContent.appendChild(iframe);
   }
   else {
-    const targetSelector = el.getAttribute('data-target');
-    if (targetSelector) {
-      const targetElement = document.querySelector(targetSelector);
-      if (targetElement) {
-        targetElement.replaceWith(iframe);
-      }
-      else {
-        console.error('renderYouTubeIframe: Target element not found for selector:', targetSelector);
-        el.replaceWith(iframe);
-      }
-    }
-    else {
-      el.replaceWith(iframe);
-    }
+    let target = getTargetElement(el);
+    target.replaceWith(iframe);
   }
 }
 
@@ -141,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ------ Wire up the escape key ------
-
   // add event listener for ESC key and close the modal if it is open
 
   document.addEventListener('keydown', (e) => {

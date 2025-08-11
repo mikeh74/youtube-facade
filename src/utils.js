@@ -99,4 +99,29 @@ function delegateEvent(parent, eventType, selector, handler, options = false) {
   }, options);
 }
 
-export { getYoutubeVideoId, isMobile, warmConnections, delegateEvent };
+function getTargetElement(el) {
+  if (!el || !(el instanceof HTMLElement)) {
+    console.error('getTargetElement: Invalid element');
+    return null;
+  }
+  const targetSelector = el.getAttribute('data-target');
+  if (targetSelector) {
+    const targetElement = document.querySelector(targetSelector);
+    if (targetElement) {
+      return targetElement;
+    }
+    console.error(
+      'getTargetElement: Target element not found for selector:',
+      targetSelector,
+    );
+  }
+  return el;
+}
+
+export {
+  getYoutubeVideoId,
+  isMobile,
+  warmConnections,
+  delegateEvent,
+  getTargetElement,
+};
