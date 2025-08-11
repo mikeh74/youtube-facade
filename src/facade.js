@@ -26,6 +26,19 @@ function renderYoutubePlayer(el, videoId, playerVars) {
     target = newDiv;
     toggleModal();
   }
+  else {
+    const targetSelector = el.getAttribute('data-target');
+    if (targetSelector) {
+      const targetElement = document.querySelector(targetSelector);
+      if (targetElement) {
+        target = targetElement;
+      }
+      else {
+        console.error('renderYoutubePlayer: Target element not found for selector:', targetSelector);
+        // Fall back to using the original element
+      }
+    }
+  }
   createYouTubePlayer(target, videoId, playerVars)
     .then((player) => {
       window.yfplayer = player;
@@ -58,7 +71,20 @@ function renderYouTubeIframe(el, videoId, playerVars) {
     modalContent.appendChild(iframe);
   }
   else {
-    el.replaceWith(iframe);
+    const targetSelector = el.getAttribute('data-target');
+    if (targetSelector) {
+      const targetElement = document.querySelector(targetSelector);
+      if (targetElement) {
+        targetElement.replaceWith(iframe);
+      }
+      else {
+        console.error('renderYouTubeIframe: Target element not found for selector:', targetSelector);
+        el.replaceWith(iframe);
+      }
+    }
+    else {
+      el.replaceWith(iframe);
+    }
   }
 }
 
