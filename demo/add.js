@@ -5,7 +5,7 @@ document.getElementById('add').addEventListener('click', function () {
   anchor.href = 'https://www.youtube.com/watch?v=n62zZATx9Ts';
   anchor.classList.add('youtube-facade');
   anchor.target = '_blank';
-  anchor.setAttribute('data-youtube-modal', 'true');
+  // anchor.setAttribute('data-youtube-modal', 'true');
   anchor.rel = 'noopener noreferrer';
   //  aria-label="Play embedded youtube video';
 

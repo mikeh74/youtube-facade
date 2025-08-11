@@ -76,8 +76,8 @@ function createYouTubeIframe(videoId, playerVars) {
   const playerVarsString = new URLSearchParams(playerVars).toString();
   const iframe = document.createElement('iframe');
   iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?${playerVarsString}`);
-  iframe.setAttribute('width', '720');
-  iframe.setAttribute('height', '405');
+  // iframe.setAttribute('width', '720');
+  // iframe.setAttribute('height', '405');
   iframe.setAttribute('class', 'youtube-facade-iframe');
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   modal.classList.add('youtube-facade-modal');
   modal.innerHTML = `
       <div class="youtube-facade-modal-content">
-        <button class="youtube-facade-modal-close" aria-label="Close modal">
+        <button class="youtube-facade-modal-close" aria-label="Close modal"><span>Close</span> &nbsp;
           <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path class="youtube-facade-model-close-svg" fill="#ffffff" d="M 16.830797 20.000301 L 10.000151 13.16957 L 3.169428 20.000301 L -0 16.830883 L 6.830741 10.000151 L -0 3.169418 L 3.169428 0 L 10.000151 6.830732 L 16.830797 0 L 20 3.169418 L 13.16958 10.000151 L 20 16.830883 Z"/>
           </svg>
@@ -115,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ------ Wire up the escape key ------
-
   // add event listener for ESC key and close the modal if it is open
 
   document.addEventListener('keydown', (e) => {

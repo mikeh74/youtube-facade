@@ -78,7 +78,7 @@ function isMobile() {
  */
 function delegateEvent(parent, eventType, selector, handler, options = false) {
   // Accept document as a valid parent
-  console.log(parent, eventType, selector, handler, options);
+  // console.log(parent, eventType, selector, handler, options);
 
   const isDocument = parent === document;
   if (!isDocument && !(parent instanceof HTMLElement)) {
