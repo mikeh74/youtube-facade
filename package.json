@@ -1,6 +1,6 @@
 {
   "name": "youtube-facade",
-  "version": "1.0.4",
+  "version": "1.2.0",
   "description": "Youtube facade package",
   "main": "index.js",
   "exports": "./index.js",
