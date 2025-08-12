@@ -126,7 +126,7 @@ function createYouTubeIframe(videoId, playerVars) {
 const modalTemplate = (() => {
   let template = `
       <div class="youtube-facade-modal-content">
-        <button class="youtube-facade-modal-close" aria-label="Close modal">
+        <button class="youtube-facade-modal-close" data-youtube-modal-close aria-label="Close modal">
           <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path class="youtube-facade-model-close-svg" fill="#ffffff" d="M 16.830797 20.000301 L 10.000151 13.16957 L 3.169428 20.000301 L -0 16.830883 L 6.830741 10.000151 L -0 3.169418 L 3.169428 0 L 10.000151 6.830732 L 16.830797 0 L 20 3.169418 L 13.16958 10.000151 L 20 16.830883 Z"/>
           </svg>
@@ -156,7 +156,7 @@ const setup = () => {
   document.body.appendChild(modal);
 
   // ------ Wire up the close button ------
-  const closeButtons = document.querySelectorAll('.youtube-facade-modal-close');
+  const closeButtons = document.querySelectorAll('[data-youtube-modal-close]');
   closeButtons.forEach((button) => {
     button.addEventListener('click', () => {
       closeModal();
