@@ -15,8 +15,14 @@ $play-btn-height: 32px;
   --ytf-modal-btn-hover: hsl(0, 0%, 35%);
 }
 
-@mixin mediaqry {
+@mixin mediaqry-md {
   @media (min-width: 768px) and (max-aspect-ratio: 17/9) {
+    @content;
+  }
+}
+
+@mixin mediaqry-lg {
+  @media (min-width: 1024px) {
     @content;
   }
 }
@@ -177,10 +183,17 @@ $play-btn-height: 32px;
   width: 98vw;
   max-width: 1000px;
 
-  @include mediaqry {
+  @include mediaqry-md {
     width: 90vw;
     padding: 2.6rem 0 0;
   }
+
+  @include mediaqry-lg {
+    width: 80vw;
+    padding: 2.6rem 0 0;
+    margin: 2rem 0;
+  }
+
 
   &-inner {
     display: flex;
@@ -202,6 +215,10 @@ $play-btn-height: 32px;
   border: 0;
 }
 
+.youtube-facade-body-no-scroll {
+  overflow: hidden;
+}
+
 /* Close button styles and accessibility improvements */
 .youtube-facade-modal-close {
   position: fixed;
@@ -213,7 +230,7 @@ $play-btn-height: 32px;
   background: var(--ytf-modal-btn);
   border: none;
   color: var(--ytf-light);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   font-size: clamp(1rem, 3vw, 1.2rem);
   z-index: 1;
   display: flex;
@@ -222,7 +239,13 @@ $play-btn-height: 32px;
   transition: background $transition-settings;
   outline: none;
 
-  @include mediaqry {
+  @include mediaqry-md {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  @include mediaqry-lg {
     position: absolute;
     top: 0;
     right: 0;
