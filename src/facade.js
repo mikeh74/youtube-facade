@@ -41,7 +41,7 @@ function renderYoutubePlayer(el, videoId, playerVars) {
       window.yfplayer = player;
 
       // add the active class
-      if (el !== target) {
+      if (el !== target && !modal) {
         el.classList.add('youtube-facade-active');
         el.tabIndex = '-1';
       }
