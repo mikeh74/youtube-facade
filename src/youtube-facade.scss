@@ -9,7 +9,8 @@ $play-btn-height: 32px;
   --ytf-light-hover: hsl(0, 0%, 100%);
   --ytf-transition: 0.33s ease-in-out;
   --ytf-modal-z-index: 10000;
-  --ytf-modal-bg: hsl(0, 0%, 16%);
+  --ytf-modal-bg: hsla(0, 0%, 16%, 0.96);
+  --ytf-modal-inner-bg: hsl(0, 0%, 26%);
   --ytf-target-bg: hsl(0, 0%, 33.33%);
   --ytf-modal-btn: hsl(0, 0%, 26%);
   --ytf-modal-btn-hover: hsl(0, 0%, 35%);
@@ -180,7 +181,7 @@ $play-btn-height: 32px;
   transition: opacity $transition-settings;
 
   &-inner {
-    background-color: var(--ytf-modal-bg);
+    background-color: var(--ytf-modal-inner-bg);
     width: 100%;
   }
 }
