@@ -1,10 +1,5 @@
 // ------ YouTube Iframe API ------
 
-// The API will call this function when the video player is ready.
-function onPlayerReady(event) {
-  event.target.playVideo();
-}
-
 let isYouTubeIframeAPILoaded = false;
 let youTubeIframeAPIPromise = null;
 
@@ -62,7 +57,7 @@ async function loadYouTubeIframeAPI() {
  * @param {object} playerVars - Player configuration variables.
  * @returns {Promise<object>} Resolves with the YT.Player instance.
  */
-async function createYouTubePlayer(elementId, videoId, playerVars) {
+async function createYouTubePlayer(elementId, videoId, playerVars, onPlayerReady) {
   if (!elementId) {
     throw new Error('createYouTubePlayer: elementId is required');
   }

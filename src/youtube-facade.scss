@@ -41,7 +41,7 @@ $play-btn-height: 32px;
   display: flex;
 
   cursor: pointer;
-  overflow: hidden;
+  // overflow: hidden;
   border: 0;
   margin: 0;
   padding: 0;
@@ -135,6 +135,24 @@ $play-btn-height: 32px;
   pointer-events: none;
 }
 
+.youtube-facade-loading::after {
+  content: "";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: none;
+  pointer-events: none;
+
+  /* SVG spinner (YouTube style) */
+  background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="18" stroke="white" stroke-width="4" fill="none" opacity="0.2"/><circle cx="20" cy="20" r="18" stroke="white" stroke-width="4" fill="none" stroke-dasharray="113" stroke-dashoffset="85" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.8s" repeatCount="indefinite"/></circle></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px 40px;
+}
+
 /* Visually hidden utility for accessibility */
 .youtube-facade-visually-hidden {
   clip: rect(0 0 0 0);
@@ -144,6 +162,15 @@ $play-btn-height: 32px;
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.youtube-facade-active iframe,
+.youtube-facade-iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: all;
 }
 
 /* Modal styles */

@@ -124,9 +124,28 @@
       </div>
     </div>
 
+    <div>
+      <h2>Target inside element</h2>
+      <div class="wrapper">
+        <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
+          class="youtube-facade" data-title="Data-target Example - Iframe" data-target="#target-3"
+          data-use-youtube-api
+          target="_blank" rel="noopener noreferrer">
+          <img id="target-3" src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
+            alt="Click to play embedded youtube video">
+          <div class="youtube-facade-playbtn"></div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div class="container">
+    <h2>Dynamic Example</h2>
+    <p>Click the button below to add a new YouTube video dynamically
     <button id="add" type="button">Add dynamically</button>
     <div id="video-target" class="wrapper"></div>
-  </div>
+  </div> -->
 
   <script src="../dist/youtube-facade.js"></script>
   <script>

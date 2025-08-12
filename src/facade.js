@@ -36,7 +36,13 @@ function renderYoutubePlayer(el, videoId, playerVars) {
     target = newDiv;
     toggleModal();
   }
-  createYouTubePlayer(target, videoId, playerVars)
+
+  const onPlayerReady = function (event) {
+    event.target.playVideo();
+    el.classList.remove('youtube-facade-loading');
+  };
+
+  createYouTubePlayer(target, videoId, playerVars, onPlayerReady)
     .then((player) => {
       window.yfplayer = player;
 
@@ -86,6 +92,7 @@ function renderYouTubeIframe(el, videoId, playerVars) {
       el.classList.add('youtube-facade-active');
       el.tabIndex = '-1';
     }
+    el.classList.remove('youtube-facade-loading');
   }
 }
 
@@ -248,6 +255,7 @@ function handleVideoClick(el, playerVars) {
     console.error('handleVideoClick: Invalid element');
     return;
   }
+  el.classList.add('youtube-facade-loading');
   const videoId = getYoutubeVideoId(el);
   if (!videoId) {
     console.error('handleVideoClick: No videoId found');
