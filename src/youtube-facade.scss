@@ -1,11 +1,19 @@
+
 $transition-settings: 0.33s ease-in-out;
-$light: #fff;
-$dark: hsl(0, 0%, 16%);
-$btn-color: hsl(0, 0%, 26%);
-$btn-color-hover: hsl(0, 0%, 35%);
 $clamp-value: 2vw;
 $play-btn-width: 45px;
 $play-btn-height: 32px;
+
+:root {
+  --ytf-light: hsl(0, 0%, 93.33%);
+  --ytf-light-hover: hsl(0, 0%, 100%);
+  --ytf-transition: 0.33s ease-in-out;
+  --ytf-modal-z-index: 10000;
+  --ytf-modal-bg: hsl(0, 0%, 16%);
+  --ytf-target-bg: hsl(0, 0%, 33.33%);
+  --ytf-modal-btn: hsl(0, 0%, 26%);
+  --ytf-modal-btn-hover: hsl(0, 0%, 35%);
+}
 
 @mixin mediaqry {
   @media (min-width: 768px) and (max-aspect-ratio: 17/9) {
@@ -22,7 +30,7 @@ $play-btn-height: 32px;
 }
 
 .youtube-facade {
-  background-color: #000;
+  background-color: var(--ytf-target-bg);
   position: relative;
   display: flex;
 
@@ -45,16 +53,16 @@ $play-btn-height: 32px;
       400px: 1.5
     );
 
-  @each $size, $scale in $sizes {
-    @container youtubefacade (min-width: #{$size}) {
-      .youtube-facade-playbtn {
-        width: $play-btn-width * $scale;
-        height: $play-btn-height * $scale;
-        background-size: $play-btn-width * $scale $play-btn-height * $scale;
+    @each $size, $scale in $sizes {
+      @container youtubefacade (min-width: #{$size}) {
+        .youtube-facade-playbtn {
+          width: $play-btn-width * $scale;
+          height: $play-btn-height * $scale;
+          background-size: $play-btn-width * $scale $play-btn-height * $scale;
+        }
       }
     }
   }
-}
 }
 
 .youtube-facade::before {
@@ -67,8 +75,8 @@ $play-btn-height: 32px;
   height: 99px;
   width: 100%;
   font-family: "YouTube Noto", Roboto, Arial, Helvetica, sans-serif;
-  color: hsl(0deg 0% 93.33%);
-  text-shadow: 0 0 2px rgba(0, 0, 0, .5);
+  color: var(--ytf-light);
+  text-shadow: 0 0 2px hsla(0, 0%, 0%, 0.5);
   font-size: clamp(0.8rem, $clamp-value, 1.2rem);
   padding: clamp(0.8rem, $clamp-value, 1.2rem);
   overflow: hidden;
@@ -79,18 +87,18 @@ $play-btn-height: 32px;
 }
 
 .youtube-facade:hover::before {
-  color: $light;
+  color: var(--ytf-light-hover);
 }
 
 /* play button */
 /* .youtube-facade::after, */
 .youtube-facade-playbtn {
   display: block;
-  width: 45px;
-  height: 32px;
+  width: $play-btn-width;
+  height: $play-btn-height;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 45px 32px;
+  background-size: $play-btn-width $play-btn-height;
   /* YT's actual play button svg */
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24 27 14v20" fill="white"/></svg>');
   position: absolute;
@@ -111,6 +119,8 @@ $play-btn-height: 32px;
 /* Post-click styles */
 .youtube-facade-active {
   cursor: unset;
+  pointer-events: none;
+  outline: none;
 }
 
 .youtube-facade-active::before,
@@ -137,7 +147,7 @@ $play-btn-height: 32px;
   transition: opacity $transition-settings;
 
   &-inner {
-    background-color: $dark;
+    background-color: var(--ytf-modal-bg);
     width: 100%;
   }
 }
@@ -146,8 +156,8 @@ $play-btn-height: 32px;
   pointer-events: auto;
   position: fixed;
   inset: 0;
-  background-color: $dark;
-  z-index: 10000;
+  background-color: var(--ytf-modal-bg);
+  z-index: var(--ytf-modal-z-index);
   overflow-y: auto; // Allow scrolling if content overflows
   display: flex;
   align-items: center;
@@ -177,7 +187,7 @@ $play-btn-height: 32px;
     position: relative;
     height: 100%;
     max-height: 100vh;
-    background-color: $dark;
+    background-color: var(--ytf-modal-bg);
     margin: auto;
     border: 0;
     padding: 0;
@@ -200,9 +210,9 @@ $play-btn-height: 32px;
   padding: 0.5rem;
   cursor: pointer;
   border-radius: 3rem;
-  background: $btn-color;
+  background: var(--ytf-modal-btn);
   border: none;
-  color: $light;
+  color: var(--ytf-light);
   padding: 0.5rem 1rem;
   font-size: clamp(1rem, 3vw, 1.2rem);
   z-index: 1;
@@ -224,19 +234,19 @@ $play-btn-height: 32px;
   }
 
   &:hover {
-    background: $btn-color-hover;
+    background: var(--ytf-modal-btn-hover);
     transition: all $transition-settings;
   }
 
   &:focus {
-    background: $btn-color-hover;
+    background: var(--ytf-modal-btn-hover);
     transition: all $transition-settings;
-    outline: 2px solid $btn-color-hover; // Accessibility: visible focus
+    outline: 2px solid var(--ytf-modal-btn-hover); // Accessibility: visible focus
     outline-offset: 2px;
   }
 
   path {
-    fill: $light;
+    fill: var(--ytf-light);
     transition: all $transition-settings;
   }
 }

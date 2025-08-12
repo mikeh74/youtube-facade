@@ -112,6 +112,7 @@ function getTargetElement(el) {
       'getTargetElement: Target element not found for selector:',
       targetSelector,
     );
+    return null;
   }
   return el;
 }

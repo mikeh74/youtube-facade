@@ -20,6 +20,10 @@ function renderYoutubePlayer(el, videoId, playerVars) {
   }
   const modal = el.getAttribute('data-youtube-modal');
   let target = getTargetElement(el);
+  if (!target) {
+    console.error('No matching target for element', el);
+    return;
+  }
   if (modal) {
     const modalPlaceholder = document.getElementById('youtube-facade-modal-placeholder');
     if (!modalPlaceholder) {
@@ -35,6 +39,12 @@ function renderYoutubePlayer(el, videoId, playerVars) {
   createYouTubePlayer(target, videoId, playerVars)
     .then((player) => {
       window.yfplayer = player;
+
+      // add the active class
+      if (el !== target) {
+        el.classList.add('youtube-facade-active');
+        el.tabIndex = '-1';
+      }
     })
     .catch((err) => {
       console.error('renderYoutubePlayer: Failed to create YouTube player', err);
@@ -65,7 +75,17 @@ function renderYouTubeIframe(el, videoId, playerVars) {
   }
   else {
     let target = getTargetElement(el);
+    // if we have no available target then exit
+    if (!target) {
+      return;
+    }
     target.replaceWith(iframe);
+
+    // add the active class
+    if (el !== target) {
+      el.classList.add('youtube-facade-active');
+      el.tabIndex = '-1';
+    }
   }
 }
 
@@ -83,8 +103,8 @@ function createYouTubeIframe(videoId, playerVars) {
   const playerVarsString = new URLSearchParams(playerVars).toString();
   const iframe = document.createElement('iframe');
   iframe.setAttribute('src', `https://www.youtube-nocookie.com/embed/${videoId}?${playerVarsString}`);
-  // iframe.setAttribute('width', '720');
-  // iframe.setAttribute('height', '405');
+  iframe.setAttribute('width', '720');
+  iframe.setAttribute('height', '405');
   iframe.setAttribute('class', 'youtube-facade-iframe');
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
