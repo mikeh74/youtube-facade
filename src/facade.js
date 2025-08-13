@@ -38,8 +38,8 @@ function renderYoutubePlayer(el, videoId, playerVars) {
   }
   else {
     // only show loading if not in modal
-    el.classList.add('youtube-facade-loading');
   }
+  el.classList.add('youtube-facade-loading');
 
   const onPlayerReady = function (event) {
     event.target.playVideo();
@@ -196,6 +196,9 @@ const closeModal = () => {
     if (modalContent) {
       modalContent.innerHTML = '';
     }
+    // Remove 'youtube-facade-loading' from any elements that have it
+    const loadingEls = document.querySelectorAll('.youtube-facade-loading');
+    loadingEls.forEach(el => el.classList.remove('youtube-facade-loading'));
     if (modal) {
       modal.classList.remove('youtube-facade-modal-active');
     }
