@@ -1,0 +1,128 @@
+
+/* Modal styles */
+.youtube-facade-modal {
+  pointer-events: none; // Prevent interaction when hidden
+  opacity: 0;
+  transition: opacity $transition-settings;
+
+  &-inner {
+    background-color: var(--ytf-modal-inner-bg);
+    width: 100%;
+  }
+}
+
+.youtube-facade-modal.youtube-facade-modal-active {
+  pointer-events: auto;
+  position: fixed;
+  inset: 0;
+  background-color: var(--ytf-modal-bg);
+  z-index: var(--ytf-modal-z-index);
+  overflow-y: auto; // Allow scrolling if content overflows
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity $transition-settings;
+
+  .youtube-facade-modal-content {
+    display: block;
+  }
+}
+
+.youtube-facade-modal-content {
+  display: none;
+  max-height: 100vh;
+  position: relative;
+  width: 98vw;
+  max-width: 1000px;
+
+  @include mediaqry-md {
+    width: 90vw;
+    padding: 2.6rem 0 0;
+  }
+
+  @include mediaqry-lg {
+    width: 80vw;
+    padding: 2.6rem 0 0;
+    margin: 2rem 0;
+  }
+
+
+  &-inner {
+    display: flex;
+    position: relative;
+    height: 100%;
+    max-height: 100vh;
+    background-color: var(--ytf-modal-bg);
+    margin: auto;
+    border: 0;
+    padding: 0;
+    width: 100%;
+    aspect-ratio: 16/9;
+  }
+}
+
+.youtube-facade-modal iframe {
+  width: 100%;
+  height: auto;
+  border: 0;
+}
+
+.youtube-facade-body-no-scroll {
+  overflow: hidden;
+}
+
+/* Close button styles and accessibility improvements */
+.youtube-facade-modal-close {
+  position: fixed;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 3rem;
+  background: var(--ytf-modal-btn);
+  border: none;
+  color: var(--ytf-light);
+  padding: 0.5rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background $transition-settings;
+  outline: none;
+
+  @include mediaqry-md {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  @include mediaqry-lg {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  svg {
+    width: clamp(0.9rem, 3vw, 1.2rem);
+    height: auto;
+  }
+
+  &:hover {
+    background: var(--ytf-modal-btn-hover);
+    transition: all $transition-settings;
+  }
+
+  &:focus {
+    background: var(--ytf-modal-btn-hover);
+    transition: all $transition-settings;
+    outline: 2px solid var(--ytf-modal-btn-hover); // Accessibility: visible focus
+    outline-offset: 2px;
+  }
+
+  path {
+    fill: var(--ytf-light);
+    transition: all $transition-settings;
+  }
+}

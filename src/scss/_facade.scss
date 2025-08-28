@@ -1,0 +1,145 @@
+.youtube-facade,
+.youtube-facade-iframe,
+.youtube-facade-img {
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: auto;
+}
+
+.youtube-facade {
+  background-color: var(--ytf-target-bg);
+  position: relative;
+  display: flex;
+
+  cursor: pointer;
+  // overflow: hidden;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+
+  @supports (container-type: inline-size) {
+    container-type: inline-size;
+    container-name: youtubefacade;
+
+    $sizes: (
+      250px: 1.2,
+      300px: 1.3,
+      350px: 1.4,
+      400px: 1.5
+    );
+
+    @each $size, $scale in $sizes {
+      @container youtubefacade (min-width: #{$size}) {
+        .youtube-facade-playbtn {
+          width: $play-btn-width * $scale;
+          height: $play-btn-height * $scale;
+          background-size: $play-btn-width * $scale $play-btn-height * $scale;
+        }
+      }
+    }
+  }
+}
+
+.youtube-facade::before {
+  content: attr(data-title);
+  display: block;
+  position: absolute;
+  top: 0;
+  /* Pixel-perfect port of YT's gradient PNG, using https://github.com/bluesmoon/pngtocss plus optimizations */
+  background-image: linear-gradient(180deg, rgb(0 0 0 / 67%) 0%, rgb(0 0 0 / 54%) 14%, rgb(0 0 0 / 15%) 54%, rgb(0 0 0 / 5%) 72%, rgb(0 0 0 / 0%) 94%);
+  height: 99px;
+  width: 100%;
+  font-family: "YouTube Noto", Roboto, Arial, Helvetica, sans-serif;
+  color: var(--ytf-light);
+  text-shadow: 0 0 2px hsla(0, 0%, 0%, 0.5);
+  font-size: clamp(0.8rem, $clamp-value, 1.2rem);
+  padding: clamp(0.8rem, $clamp-value, 1.2rem);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.youtube-facade:hover::before {
+  color: var(--ytf-light-hover);
+}
+
+/* play button */
+/* .youtube-facade::after, */
+.youtube-facade-playbtn {
+  display: block;
+  width: $play-btn-width;
+  height: $play-btn-height;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: $play-btn-width $play-btn-height;
+  /* YT's actual play button svg */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24 27 14v20" fill="white"/></svg>');
+  position: absolute;
+  /* cursor: pointer; */
+  z-index: 1;
+  filter: grayscale(100%);
+  transition: all $transition-settings;
+  border: 0;
+  pointer-events: none;
+}
+
+.youtube-facade:hover .youtube-facade-playbtn,
+.youtube-facade-playbtn:focus,
+.youtube-facade:focus .youtube-facade-playbtn {
+  filter: none;
+}
+
+/* Post-click styles */
+.youtube-facade-active {
+  cursor: unset;
+  pointer-events: none;
+  outline: none;
+}
+
+.youtube-facade-active::before,
+.youtube-facade-active>.youtube-facade-playbtn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.youtube-facade-loading::after {
+  content: "";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: none;
+  pointer-events: none;
+
+  /* SVG spinner (YouTube style) */
+  background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="18" stroke="white" stroke-width="4" fill="none" opacity="0.2"/><circle cx="20" cy="20" r="18" stroke="white" stroke-width="4" fill="none" stroke-dasharray="113" stroke-dashoffset="85" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.8s" repeatCount="indefinite"/></circle></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px 40px;
+}
+
+/* Visually hidden utility for accessibility */
+.youtube-facade-visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.youtube-facade-active iframe,
+.youtube-facade-iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: all;
+}

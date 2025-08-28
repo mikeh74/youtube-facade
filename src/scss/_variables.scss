@@ -1,0 +1,17 @@
+$transition-settings: 0.33s ease-in-out;
+$clamp-value: 2vw;
+$play-btn-width: 45px;
+$play-btn-height: 32px;
+
+
+:root {
+  --ytf-light: rgb(238, 238, 238);
+  --ytf-light-hover: rgb(255, 255, 255);
+  --ytf-transition: 0.33s ease-in-out;
+  --ytf-modal-z-index: 10000;
+  --ytf-modal-bg: rgba(41, 41, 41, 0.95);
+  --ytf-modal-inner-bg: #424242;
+  --ytf-target-bg: rgb(85, 85, 85);
+  --ytf-modal-btn: rgb(66, 66, 66);
+  --ytf-modal-btn-hover: rgb(89, 89, 89);
+}

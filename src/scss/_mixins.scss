@@ -1,0 +1,12 @@
+
+@mixin mediaqry-md {
+  @media (min-width: 768px) and (max-aspect-ratio: 17/9) {
+    @content;
+  }
+}
+
+@mixin mediaqry-lg {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
