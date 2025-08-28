@@ -4,6 +4,7 @@ import {
   warmConnections,
   delegateEvent,
   getTargetElement,
+  needsYouTubeApi,
 } from './utils';
 import { createYouTubePlayer } from './loader';
 
@@ -266,7 +267,9 @@ function handleVideoClick(el, playerVars) {
     console.error('handleVideoClick: No videoId found');
     return;
   }
-  const needsYTApi = el.hasAttribute('data-use-youtube-api') || navigator.vendor.includes('Apple') || navigator.userAgent.includes('Mobi');
+
+  const needsYTApi = needsYouTubeApi(el);
+
   if (el.hasAttribute('data-mute-for-mobile') && isMobile()) {
     playerVars['mute'] = 1;
   }

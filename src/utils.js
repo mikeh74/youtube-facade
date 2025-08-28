@@ -117,10 +117,28 @@ function getTargetElement(el) {
   return el;
 }
 
+/**
+   * Determines if the YouTube API is needed for the given element and environment.
+   * @param {HTMLElement} el - The element to check.
+   * @returns {boolean} True if the YouTube API should be used.
+   */
+function needsYouTubeApi(el) {
+  if (el.hasAttribute('data-use-youtube-api')) {
+    const attr = el.getAttribute('data-use-youtube-api');
+    if (typeof attr === 'string' && attr.trim().toLowerCase() === 'false') {
+      return false;
+    }
+    return true;
+  }
+  return navigator.vendor.includes('Apple')
+    || navigator.userAgent.includes('Mobi');
+}
+
 export {
   getYoutubeVideoId,
   isMobile,
   warmConnections,
   delegateEvent,
   getTargetElement,
+  needsYouTubeApi,
 };
