@@ -113,7 +113,37 @@ You can use the `data-target` attribute to specify a different element to receiv
 
 When the facade is clicked, the YouTube embed will be placed inside the element with the selector specified by `data-target`. If the target element is not found, the embed will appear in place of the facade link as usual.
 
----
+
+## Data Attributes
+
+YouTube Facade supports several `data-` attributes to control its behavior directly in your HTML:
+
+
+| Attribute                | Description                                                                                 | Example Value         |
+|--------------------------|---------------------------------------------------------------------------------------------|----------------------|
+| `data-youtube-modal`     | Opens the video in a modal overlay. No value needed.                                        | (present/empty)      |
+| `data-target`            | CSS selector for a target element where the video should be embedded.                       | `#video-container`   |
+| `data-use-youtube-api`   | Forces use of the YouTube Iframe API (enables JS API features, e.g., autoplay, events). If set to "false", always uses a plain iframe. | (present/empty) or "false" |
+| `data-title`             | Sets the accessible label/title for the video.                                              | "My Video Title"    |
+| `data-mute-for-mobile`   | Mutes the video for autoplay on mobile devices (overrides global option if present).        | (present/empty)      |
+
+**Example:**
+
+```html
+<a href="https://www.youtube.com/watch?v=VIDEO_ID"
+   class="youtube-facade"
+   data-youtube-modal
+   data-target="#video-container"
+   data-use-youtube-api
+   data-title="My Video Title"
+   data-mute-for-mobile>
+  <img src="https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg" alt="Click to play embedded YouTube video">
+  <div class="youtube-facade-playbtn"></div>
+</a>
+<div id="video-container"></div>
+```
+
+You can combine these attributes as needed to customize the behavior for each video embed.
 
 ## API Reference
 
