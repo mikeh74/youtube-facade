@@ -183,6 +183,62 @@
       </div>
   </div>
 
+  <div class="container">
+
+    <h2>Safari target issue</h2>
+
+    <p>This is a known issue with Safari where the target attribute is not working 
+      if your target is an img element with a source of i.ytimg.com</p>
+
+    <p>Make the target a div element instead to get ensure you don't run into this issue.</p>
+
+    <div>
+
+      <div class="wrapper">
+
+    <a role="button" class="youtube-facade" data-target="#youtube-1211057" data-youtube-id="0-7q8k5PiEY" href="#">
+      <div class="card">
+        <div class="embed-responsive embed-responsive-16by9">
+          <img id="youtube-1211057" class="embed-responsive-item"
+            style="max-width: 100%;"
+            loading="lazy"
+            alt="Click to play embedded youtube video"
+            src="//i.ytimg.com/vi/0-7q8k5PiEY/maxresdefault.jpg">
+        </div>
+        <div class="card-footer">
+          <p>Play Video</p>
+          <div class="icon-container">
+            <i class="icon icon-play" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <a role="button" class="youtube-facade" data-target="#youtube-1211058" data-youtube-id="0-7q8k5PiEY" href="#">
+      <div class="card">
+        <div class="embed-responsive embed-responsive-16by9">
+          <div id="youtube-1211058">
+            <img class="embed-responsive-item"
+              style="max-width: 100%;"
+              loading="lazy"
+              alt="Click to play embedded youtube video"
+              src="//i.ytimg.com/vi/0-7q8k5PiEY/maxresdefault.jpg">
+          </div>
+        </div>
+        <div class="card-footer">
+          <p>Play Video</p>
+          <div class="icon-container">
+            <i class="icon icon-play" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </a>
+
+      </div>
+    </div>
+  </div>
+
+
   <!-- <div class="container">
     <h2>Dynamic Example</h2>
     <p>Click the button below to add a new YouTube video dynamically
