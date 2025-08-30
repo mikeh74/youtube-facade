@@ -92,6 +92,61 @@ To play the YouTube video in a modal, add the `data-youtube-modal` attribute (no
 
 ---
 
+## Custom Modal Template
+
+You can customize the modal template by passing a `customModalTemplate` parameter to the `youtubeFacade` function. This allows you to modify the appearance and structure of the modal while maintaining the required functionality.
+
+**Default Modal Template:**
+
+```html
+<div class="youtube-facade-modal-content">
+  <button class="youtube-facade-modal-close" aria-label="Close modal">
+    <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path class="youtube-facade-model-close-svg" fill="#ffffff" d="M 16.830797 20.000301 L 10.000151 13.16957 L 3.169428 20.000301 L -0 16.830883 L 6.830741 10.000151 L -0 3.169418 L 3.169428 0 L 10.000151 6.830732 L 16.830797 0 L 20 3.169418 L 13.16958 10.000151 L 20 16.830883 Z"/>
+    </svg>
+  </button>
+  <div class="youtube-facade-modal-content-inner">
+    <div id="youtube-facade-modal-placeholder" class="youtube-facade-modal-inner"></div>
+  </div>
+</div>
+```
+
+**Required Elements:**
+
+For the modal to function correctly, your custom template must include:
+
+1. **Close button** with class `youtube-facade-modal-close` - This element will receive click event listeners for closing the modal
+2. **Video placeholder** with ID `youtube-facade-modal-placeholder` - This is where the YouTube video iframe will be inserted
+3. **ARIA label** on the close button for accessibility
+
+**Usage Example:**
+
+```javascript
+const customTemplate = `
+  <div class="my-custom-modal-content">
+    <div class="my-header">
+      <h2>Custom Video Player</h2>
+      <button class="youtube-facade-modal-close" aria-label="Close video">✕</button>
+    </div>
+    <div class="my-video-container">
+      <div id="youtube-facade-modal-placeholder"></div>
+    </div>
+  </div>
+`;
+
+youtubeFacade({
+  customModalTemplate: customTemplate
+});
+```
+
+**Important Notes:**
+- The modal template is set globally for all YouTube facades on the page
+- Custom CSS styling can be applied to your custom classes
+- The close button functionality (click and ESC key) is automatically wired up
+- The video placeholder element will be populated with the YouTube iframe when a modal video is activated
+
+---
+
 ## Targeting a Specific Element
 
 You can use the `data-target` attribute to specify a different element to receive the YouTube embed when the facade is activated. This is useful for advanced layouts or when you want the video to appear elsewhere in the DOM.
@@ -149,13 +204,15 @@ You can combine these attributes as needed to customize the behavior for each vi
 
 ```javascript
 youtubeFacade({
-  selector: '.youtube-facade', // CSS selector for YouTube links
-  muteForAutoplay: true       // Mute video for autoplay on mobile (default: true)
+  selector: '.youtube-facade',        // CSS selector for YouTube links
+  muteForAutoplay: true,              // Mute video for autoplay on mobile (default: true)
+  customModalTemplate: null           // Custom modal template HTML string (default: null)
 });
 ```
 
 - `selector`: CSS selector for YouTube links (default: `.youtube-facade`)
 - `muteForAutoplay`: Mute video for autoplay on mobile devices (default: `true`)
+- `customModalTemplate`: Custom HTML template string for the modal (default: `null` - uses built-in template)
 
 ---
 
