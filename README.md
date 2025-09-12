@@ -179,6 +179,7 @@ YouTube Facade supports several `data-` attributes to control its behavior direc
 | `data-youtube-modal`     | Opens the video in a modal overlay. No value needed.                                        | (present/empty)      |
 | `data-target`            | CSS selector for a target element where the video should be embedded.                       | `#video-container`   |
 | `data-use-youtube-api`   | Forces use of the YouTube Iframe API (enables JS API features, e.g., autoplay, events). If set to "false", always uses a plain iframe. | (present/empty) or "false" |
+| `data-use-youtube-thumb` | Adding this will force a placeholder image to be loaded from Youtube (tries to load best quality first with fallbacks to lower quality) | (present/empty) or "false" |
 | `data-title`             | Sets the accessible label/title for the video.                                              | "My Video Title"    |
 | `data-mute-for-mobile`   | Mutes the video for autoplay on mobile devices (overrides global option if present).        | (present/empty)      |
 

@@ -6,6 +6,7 @@ import {
   getTargetElement,
   needsYouTubeApi,
 } from './utils';
+import checkForThumbs from './thumbnails';
 import { createYouTubePlayer } from './loader';
 
 /**
@@ -224,6 +225,7 @@ const youtubeFacade = ({
     modalTemplate.set(customModalTemplate);
   }
 
+  checkForThumbs(selector);
   setup(); // Ensure modal is set up
 
   const playerVars = {
