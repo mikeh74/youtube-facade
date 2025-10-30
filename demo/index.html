@@ -81,7 +81,9 @@
 
     <div class="wrapper">
       <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
-        class="youtube-facade video-placeholder" data-title="Youtube Facade - First one" target="_blank" rel="noopener noreferrer">
+        class="youtube-facade video-placeholder"
+        data-use-youtube-api="false"
+        data-title="Youtube Facade - First (iframe)" target="_blank" rel="noopener noreferrer">
         <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
           alt="Click to play embedded youtube video">
         <div class="youtube-facade-playbtn"></div>
@@ -89,7 +91,7 @@
 
       <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" data-youtube-modal="true"
         aria-label="Play embedded youtube video" class="youtube-facade" data-use-youtube-api
-        data-title="Youtube Facade - Second one" target="_blank" rel="noopener noreferrer">
+        data-title="Youtube Facade - Second one (API)" target="_blank" rel="noopener noreferrer">
         <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
           alt="Click to play embedded youtube video">
         <div class="youtube-facade-playbtn"></div>
@@ -192,7 +194,7 @@
     <p>This is a known issue with Safari where the target attribute is not working 
       if your target is an img element with a source of i.ytimg.com</p>
 
-    <p>Make the target a div element instead to get ensure you don't run into this issue.</p>
+    <p>Make the target a div element instead to ensure you don't run into this issue.</p>
 
     <div>
 

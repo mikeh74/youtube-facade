@@ -119,6 +119,9 @@ function getTargetElement(el) {
 
 /**
    * Determines if the YouTube API is needed for the given element and environment.
+   * Check the element first for the data-use-youtube-api attribute
+   * if this isn't set then fall back to whether it's an Apple device or on
+   * mobile.
    * @param {HTMLElement} el - The element to check.
    * @returns {boolean} True if the YouTube API should be used.
    */
