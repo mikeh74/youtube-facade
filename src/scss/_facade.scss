@@ -81,15 +81,18 @@
   position: absolute;
   /* cursor: pointer; */
   z-index: 1;
-  filter: grayscale(100%);
   transition: all $transition-settings;
   border: 0;
   pointer-events: none;
 }
 
-.youtube-facade:hover .youtube-facade-playbtn,
-.youtube-facade-playbtn:focus,
-.youtube-facade:focus .youtube-facade-playbtn {
+.gray-filter {
+  filter: grayscale(100%);
+}
+
+.gray-filter:focus,
+.youtube-facade:hover .gray-filter,
+.youtube-facade:focus .gray-filter {
   filter: none;
 }
 

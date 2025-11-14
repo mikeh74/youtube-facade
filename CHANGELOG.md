@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0] - 2025-11-14
+
+### Changed
+- Switched gray filter off to bring the facade in line with current youtube
+iframe display
+- Added bootstrap 5 demo page to check for compatability issues
+
 ## [1.3.4] - 2025-08-28
 
 ### Added

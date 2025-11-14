@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../dist/youtube-facade.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Example Bootstrap 5 integration</title>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Bootstrap 5 Example</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col col-12 col-md-6">
+                <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
+                    class="youtube-facade video-placeholder"
+                    data-use-youtube-api="false"
+                    data-title="Youtube Facade - First (iframe)" target="_blank" rel="noopener noreferrer">
+                    <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
+                    alt="Click to play embedded youtube video">
+                    <div class="youtube-facade-playbtn"></div>
+                </a>
+            </div>
+            <div class="col col-12 col-md-6">
+                <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
+                    class="youtube-facade video-placeholder"
+                    data-use-youtube-api="false"
+                    data-youtube-modal="true"
+                    data-use-youtube-thumb="true"
+                    data-title="Youtube Facade - First (iframe)" target="_blank" rel="noopener noreferrer">
+                    <img
+                    class="youtube-facade-img"
+                    alt="Click to play embedded youtube video">
+                    <div class="youtube-facade-playbtn"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <script src="../dist/youtube-facade.js"></script>
+  <script>
+    youtubeFacade({ muteForAutoplay: true });
+
+    // Example: Listen for the custom event elsewhere in your code
+    document.addEventListener('youtube-facade:activated', (e) => {
+      console.log('YouTube facade activated:', e.detail);
+    });
+    </script>
+
+  </body>
+</html>
