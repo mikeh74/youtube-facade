@@ -2,7 +2,7 @@
 
 A lightweight, accessible YouTube embed solution inspired by Paul Irish's [Lite YouTube Embed](https://github.com/paulirish/lite-youtube-embed). This package provides a simple way to embed YouTube videos with minimal JavaScript, optional modal playback, and improved performance.
 
-[Live Demo](https://mikeh74.github.io/youtube-facade/demo)
+[Live Demo](https://foxshack.github.io/youtube-facade/demo)
 
 **Features:**
 - No custom elements required
@@ -14,18 +14,22 @@ A lightweight, accessible YouTube embed solution inspired by Paul Irish's [Lite 
 
 ## Installation
 
-**Option 1: Static files**
+**Option 1: CDN**
+
+Reference the CSS and JS files using the jsdelivr CDN
+
 Copy the `dist` folder to your project and reference the CSS and JS files:
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="/path/to/dist/youtube-facade.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/foxshack/youtube-facade@1.0.0/dist/youtube-facade.css">
 </head>
 <body>
   <!-- Your YouTube links here -->
-  <script src="/path/to/dist/youtube-facade.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/foxshack/youtube-facade@1.0.0/dist/youtube-facade.js"></script>
   <script>
     youtubeFacade();
   </script>
@@ -37,14 +41,14 @@ Copy the `dist` folder to your project and reference the CSS and JS files:
 Install via npm and import in your code:
 
 ```bash
-npm install git+https://github.com/mikeh74/youtube-facade.git#<commit-or-tag>
+npm install git+https://github.com/foxshack/youtube-facade.git#<commit-or-tag>
 ```
 
 Replace `<commit-or-tag>` with the desired commit hash, branch name, or git tag.  
 For example, to install a specific tag:
 
 ```bash
-npm install git+https://github.com/mikeh74/youtube-facade.git#v1.1.0
+npm install git+https://github.com/foxshack/youtube-facade.git#v1.1.0
 ```
 
 ```javascript

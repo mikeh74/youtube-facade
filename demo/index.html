@@ -1,272 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Youtube Facade</title>
+  <title>YouTube Facade Demo - Lightweight YouTube Embeds</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="style.css">
 
   <link rel="stylesheet" href="../dist/youtube-facade.css">
-
-  <style>
-
-    body {
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .wrapper {
-      display: flex;
-      justify-content: space-between;
-      gap: 1.2rem;
-      margin-bottom: 1rem;
-      flex-direction: column;
-    }
-
-    .data-target-example {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      min-width: 100%;
-    }
-
-    @media (min-width: 600px) {
-
-      .wrapper {
-        flex-direction: row;
-      }
-
-      .data-target-example {
-        min-width: auto;
-      }
-    }
-
-    .video-placeholder {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-      background-color: #6f6f6f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      span {
-        color: #fff;
-        font-size: 1.2rem;
-        text-align: center;
-        padding: 3rem;
-      }
-    }
-
-  </style>
 </head>
 
 <body>
+  <header class="banner">
+    <h1>🎬 YouTube Facade</h1>
+    <p>A lightweight, accessible YouTube embed solution for faster page loads
+      and better user experience.</p>
+  </header>
 
   <div class="container">
+    <div class="intro">
+      <p><strong>YouTube Facade</strong> is a lightweight, accessible YouTube
+        embed solution that provides a facade/placeholder for YouTube videos
+        with minimal JavaScript. It improves page load performance by only
+        loading the YouTube iframe when users interact with the video.</p>
+      <p><strong>Benefits:</strong> Faster page loads, reduced data usage,
+        improved privacy, and better user experience.</p>
 
-    <h1>Youtube Facade</h1>
+      <div class="wrapper">
+        <a href="https://www.youtube.com/watch?v=EuF65Ohn51M"
+          aria-label="Play embedded youtube video"
+          class="youtube-facade" data-use-youtube-thumb
+          target="_blank"
+          rel="noopener noreferrer">
+          <img src="" class="youtube-facade-img"
+            alt="Click to play embedded youtube video">
+          <div class="youtube-facade-playbtn"></div>
+        </a>
 
-    <p>Example of youtube facade, this basic markup is enough to create
-      a link to youtube, if all else fails it will link to youtube to play
-      the video.</p>
-
-    <div class="wrapper">
-      <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
-        class="youtube-facade video-placeholder"
-        data-use-youtube-api="false"
-        data-title="Youtube Facade - First (iframe)" target="_blank" rel="noopener noreferrer">
-        <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
-          alt="Click to play embedded youtube video">
-        <div class="youtube-facade-playbtn"></div>
-      </a>
-
-      <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" data-youtube-modal="true"
-        aria-label="Play embedded youtube video" class="youtube-facade" data-use-youtube-api
-        data-title="Youtube Facade - Second one (API)" target="_blank" rel="noopener noreferrer">
-        <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
-          alt="Click to play embedded youtube video">
-        <div class="youtube-facade-playbtn"></div>
-      </a>
+        <a href="https://www.youtube.com/watch?v=CYW0LngZ7v8"
+          aria-label="Play embedded youtube video"
+          class="youtube-facade" data-use-youtube-thumb
+          data-youtube-modal="true"
+          target="_blank"
+          rel="noopener noreferrer">
+          <img src="" class="youtube-facade-img"
+            alt="Click to play embedded youtube video">
+          <div class="youtube-facade-playbtn"></div>
+        </a>
+      </div>
     </div>
 
-    <h2>Data-target Examples</h2>
-    <p>These examples use the new <code>data-target</code> attribute to place the video in a specific target element instead of replacing the facade.</p>
+    <div class="how-to">
+      <h2>📖 How to Use</h2>
 
-    <div class="wrapper">
-      <div class="data-target-example">
-        <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
-          class="youtube-facade" data-title="Data-target Example - Iframe" data-target="#target-1"
-          target="_blank" rel="noopener noreferrer">
-          <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
-            alt="Click to play embedded youtube video">
-          <div class="youtube-facade-playbtn"></div>
-        </a>
-        <div id="target-1" class="video-placeholder">
-          <span>
-            Target Element 1 - This will be replaced by the YouTube API player
-          </span>
-        </div>
-      </div>
+      <h3>1. Include the Files via CDN</h3>
+      <pre><code>
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foxshack/youtube-facade@1.0.0/dist/youtube-facade.css"&gt;
+&lt;script src="https://cdn.jsdelivr.net/gh/foxshack/youtube-facade@1.0.0/dist/youtube-facade.js"&gt;&lt;/script&gt;
+      </code></pre>
 
-      <div class="data-target-example">
-        <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
-          class="youtube-facade" data-title="Data-target Example - API" data-target="#target-2" data-use-youtube-api
-          target="_blank" rel="noopener noreferrer">
-          <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
-            alt="Click to play embedded youtube video">
-          <div class="youtube-facade-playbtn"></div>
-        </a>
-        <div id="target-2" class="video-placeholder">
-          <span>
-            Target Element 2 - This will be replaced by the YouTube API player
-          </span>
-        </div>
+      <h3>2. Add the HTML Markup</h3>
+      <pre><code>&lt;a href="https://www.youtube.com/watch?v=VIDEO_ID" 
+   class="youtube-facade"
+   aria-label="Play embedded youtube video"
+   target="_blank" 
+   rel="noopener noreferrer"&gt;
+  &lt;img src="https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg" 
+       class="youtube-facade-img"
+       alt="Video thumbnail"&gt;
+  &lt;div class="youtube-facade-playbtn"&gt;&lt;/div&gt;
+&lt;/a&gt;</code></pre>
+
+      <h3>3. Initialize the Library</h3>
+      <pre><code>&lt;script&gt;
+  youtubeFacade({ muteForAutoplay: true });
+&lt;/script&gt;</code></pre>
+
+      <div class="attributes-list">
+        <h3>📋 Available Attributes</h3>
+        <ul>
+          <li><code>class="youtube-facade"</code> - Required: Identifies the facade element</li>
+          <li><code>data-youtube-modal="true"</code> - Optional: Opens video in a modal</li>
+          <li><code>data-use-youtube-api</code> - Optional: Use YouTube Player API for advanced controls</li>
+          <li><code>data-target="#element-id"</code> - Optional: Place video in a specific target element</li>
+          <li><code>data-youtube-id="VIDEO_ID"</code> - Optional: Specify video ID instead of href</li>
+          <li><code>data-use-youtube-thumb</code> - Optional: Auto-load thumbnail from YouTube</li>
+          <li><code>data-title="Video Title"</code> - Optional: Set iframe title for accessibility</li>
+        </ul>
       </div>
     </div>
 
     <div>
-      <h2>Target inside element</h2>
+      <h2>💡 Examples</h2>
+
+      <h3>Basic Inline Embeds</h3>
+      <p>Click the facades below to load the YouTube player inline.</p>
+
       <div class="wrapper">
         <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
-          class="youtube-facade" data-title="Data-target Example - Iframe" data-target="#target-3"
-          data-use-youtube-api="false"
-          target="_blank" rel="noopener noreferrer">
-          <img id="target-3" src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
+          class="youtube-facade" data-use-youtube-api="false" data-title="Standard Iframe Embed" target="_blank"
+          rel="noopener noreferrer">
+          <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
             alt="Click to play embedded youtube video">
           <div class="youtube-facade-playbtn"></div>
         </a>
-        <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
-          class="youtube-facade" data-title="Data-target Example - API" data-target="#target-4"
-          data-use-youtube-api
-          target="_blank" rel="noopener noreferrer">
-          <img id="target-4" src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
+
+        <a href="https://www.youtube.com/watch?v=oPtvw91fQ88" aria-label="Play embedded youtube video"
+          class="youtube-facade" data-use-youtube-api data-title="YouTube API Embed" target="_blank"
+          rel="noopener noreferrer">
+          <img src="https://i.ytimg.com/vi/oPtvw91fQ88/maxresdefault.jpg" class="youtube-facade-img"
             alt="Click to play embedded youtube video">
           <div class="youtube-facade-playbtn"></div>
         </a>
       </div>
-    </div>
 
-    <div>
-      <h2>Multi Modal Example</h2>
-      <div class="wrapper">
-        <div class="video-placeholder">
-          <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" data-youtube-modal="true"
+      <div>
+        <h3>Modal Playback</h3>
+        <p>Add <code>data-youtube-modal="true"</code> to open videos in a modal
+          overlay. Great for maintaining page context.
+        </p>
+
+        <div class="wrapper">
+          <a href="https://www.youtube.com/watch?v=1MYpjFvAcHI" data-youtube-modal="true"
             aria-label="Play embedded youtube video" class="youtube-facade" data-use-youtube-api
-            data-use-youtube-thumb
-            data-title="Youtube Facade - Second one" target="_blank" rel="noopener noreferrer">
-            <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
+            data-title="Modal Example 1" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/1MYpjFvAcHI/maxresdefault.jpg" class="youtube-facade-img"
               alt="Click to play embedded youtube video">
+            <div class="youtube-facade-playbtn"></div>
+          </a>
+
+          <a href="https://www.youtube.com/watch?v=1EgSQND6NLI" data-youtube-modal="true"
+            aria-label="Play embedded youtube video" class="youtube-facade"
+            data-use-youtube-api data-use-youtube-thumb
+            data-title="Modal Example 2" target="_blank" rel="noopener noreferrer">
+            <img src="" class="youtube-facade-img" alt="Click to play embedded youtube video">
             <div class="youtube-facade-playbtn"></div>
           </a>
         </div>
 
-        <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
-          class="youtube-facade" data-title="Youtube Facade - Modal 2" data-youtube-modal="true"
-          data-use-youtube-api target="_blank" rel="noopener noreferrer">
-          <img src="https://i.ytimg.com/vi/n62zZATx9Ts/maxresdefault.jpg" class="youtube-facade-img"
-          alt="Click to play embedded youtube video">
+        <h3>Target Element Placement</h3>
+        <p>Use <code>data-target</code> to place the video in a specific
+          element instead of replacing the facade. Perfect for custom layouts.</p>
+
+        <div class="wrapper">
+          <div class="data-target-example">
+            <a href="https://www.youtube.com/watch?v=r257_UANnOA"
+              aria-label="Play embedded youtube video"
+              class="youtube-facade" data-title="Target Example - Iframe"
+              data-target="#target-1" target="_blank"
+              rel="noopener noreferrer">
+              <img src="https://i.ytimg.com/vi/r257_UANnOA/maxresdefault.jpg"
+                class="youtube-facade-img"
+                alt="Click to play embedded youtube video">
+              <div class="youtube-facade-playbtn"></div>
+            </a>
+            <div id="target-1" class="video-placeholder">
+              <span>Target Element 1 - Click above to load video here</span>
+            </div>
+          </div>
+
+          <div class="data-target-example">
+            <a href="https://www.youtube.com/watch?v=Af8GLLHOM4s"
+              aria-label="Play embedded youtube video"
+              class="youtube-facade" data-title="Target Example - YouTube API"
+              data-target="#target-2"
+              data-use-youtube-api target="_blank" rel="noopener noreferrer">
+              <img src="https://i.ytimg.com/vi/Af8GLLHOM4s/maxresdefault.jpg"
+                class="youtube-facade-img"
+                alt="Click to play embedded youtube video">
+              <div class="youtube-facade-playbtn"></div>
+            </a>
+            <div id="target-2" class="video-placeholder">
+              <span>Target Element 2 - Click above to load video here</span>
+            </div>
+          </div>
+        </div>
+
+        <h3>Advanced: Target Inside Facade</h3>
+        <p>You can even target elements inside the facade itself for unique layouts.</p>
+        <a href="https://www.youtube.com/watch?v=qs5tqHOKDPM"
+          aria-label="Play embedded youtube video"
+          class="youtube-facade" data-title="Data-target Example - Iframe"
+          data-target="#target-30" target="_blank"
+          rel="noopener noreferrer">
+          <img id="target-30" src="https://i.ytimg.com/vi/qs5tqHOKDPM/maxresdefault.jpg"
+            class="youtube-facade-img"
+            alt="Click to play embedded youtube video">
           <div class="youtube-facade-playbtn"></div>
         </a>
-        <a href="https://www.youtube.com/watch?v=n62zZATx9Ts" aria-label="Play embedded youtube video"
-          class="youtube-facade" data-title="Youtube Facade - Modal 3" data-youtube-modal="true"
-          data-use-youtube-thumb data-use-youtube-api
-          target="_blank" rel="noopener noreferrer">
-          <img src="" class="youtube-facade-img"
-          alt="Click to play embedded youtube video">
-          <div class="youtube-facade-playbtn"></div>
-        </a>
-      </div>
-  </div>
 
-  <div class="container">
-
-    <h2>Safari target issue</h2>
-
-    <p>This is a known issue with Safari where the target attribute is not working 
-      if your target is an img element with a source of i.ytimg.com</p>
-
-    <p>Make the target a div element instead to ensure you don't run into this issue.</p>
-
-    <div>
-
-      <div class="wrapper">
-
-    <a role="button" class="youtube-facade" data-target="#youtube-1211057"
-      data-use-youtube-thumb
-      data-youtube-id="n62zZATx9Ts" href="#">
-      <div class="card">
-        <div class="embed-responsive embed-responsive-16by9">
-          <img id="youtube-1211057" class="embed-responsive-item"
-            style="max-width: 100%;"
-            loading="lazy"
-            alt="Click to play embedded youtube video"
-            src="">
+        <div class="note">
+          <strong>⚠️ Safari Compatibility Note:</strong>
+          <p>When using <code>data-target</code> with Safari, if your target
+            is an <code>&lt;img&gt;</code> element with a source from 
+            <code>i.ytimg.com</code>, the replacement may not work correctly.
+            Use a <code>&lt;div&gt;</code> wrapper around the image instead
+            to ensure compatibility across all browsers.
+          </p>
         </div>
-        <div class="card-footer">
-          <p>Play Video</p>
-          <div class="icon-container">
-            <i class="icon icon-play" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </a>
-
-    <a role="button" class="youtube-facade"
-      data-use-youtube-thumb
-      data-target="#youtube-1211058"
-      data-youtube-id="n62zZATx9Ts" href="#">
-      <div class="card">
-        <div class="embed-responsive embed-responsive-16by9">
-          <div id="youtube-1211058">
-            <img class="embed-responsive-item"
-              style="max-width: 100%;"
-              loading="lazy"
-              alt="Click to play embedded youtube video"
-              src="">
-          </div>
-        </div>
-        <div class="card-footer">
-          <p>Play Video</p>
-          <div class="icon-container">
-            <i class="icon icon-play" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </a>
-
       </div>
     </div>
   </div>
 
-
-  <!-- <div class="container">
-    <h2>Dynamic Example</h2>
-    <p>Click the button below to add a new YouTube video dynamically
-    <button id="add" type="button">Add dynamically</button>
-    <div id="video-target" class="wrapper"></div>
-  </div> -->
-
   <script src="../dist/youtube-facade.js"></script>
   <script>
+    // Initialize YouTube Facade with auto-mute for mobile devices
     youtubeFacade({ muteForAutoplay: true });
 
-    // Example: Listen for the custom event elsewhere in your code
+    // Listen for activation events (optional)
     document.addEventListener('youtube-facade:activated', (e) => {
       console.log('YouTube facade activated:', e.detail);
     });
-
   </script>
-
-  <!-- <script src="./add.js"></script> -->
-
 </body>
 </html>
